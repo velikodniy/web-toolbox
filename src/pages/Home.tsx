@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiKey, FiCode, FiAlignLeft, FiLink, FiShield } from 'react-icons/fi';
+import { FiKey, FiCode, FiAlignLeft, FiLink, FiShield, FiMapPin } from 'react-icons/fi';
 
 const Home: React.FC = () => {
   const tools = [
@@ -34,6 +34,12 @@ const Home: React.FC = () => {
       description: 'Generate SHA-1 and SHA-256 hashes from text',
       path: '/hash-generator',
       icon: <FiShield />,
+    },
+    {
+      name: 'Postcode Lookup',
+      description: 'Lookup UK postcodes, coordinates and administrative data',
+      path: '/postcode-lookup',
+      icon: <FiMapPin />,
     },
   ];
 

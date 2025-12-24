@@ -9,6 +9,7 @@ import Base64Tool from './pages/Base64Tool.tsx';
 import JSONFormatter from './pages/JSONFormatter.tsx';
 import URLEncoder from './pages/URLEncoder.tsx';
 import HashGenerator from './pages/HashGenerator.tsx';
+import PostcodeLookup from './pages/PostcodeLookup.tsx';
 
 function getInitialTheme(): 'light' | 'dark' {
   if (typeof document !== 'undefined') {
@@ -93,6 +94,7 @@ function App() {
               <Route path='/json-formatter' element={<JSONFormatter />} />
               <Route path='/url-encoder' element={<URLEncoder />} />
               <Route path='/hash-generator' element={<HashGenerator />} />
+              <Route path='/postcode-lookup' element={<PostcodeLookup />} />
             </Routes>
           </div>
         </main>
