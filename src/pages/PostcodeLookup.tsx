@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDebounce } from '../hooks/useDebounce.ts';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { toast } from 'react-hot-toast';
@@ -41,6 +41,14 @@ const PostcodeLookup: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<PostcodeData | null>(null);
   const debouncedInput = useDebounce(input, 500);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const initialPostcode = params.get('postcode');
+    if (initialPostcode) {
+      setInput(initialPostcode.trim());
+    }
+  }, []);
 
   useEffect(() => {
     const fetchPostcode = async () => {
@@ -131,21 +139,20 @@ const PostcodeLookup: React.FC = () => {
         <div className="result-section fade-in">
           <div className="split-view">
             <div>
-              <h3>Location Details</h3>
-              <div className="result-output" style={{ marginBottom: '1.5rem' }}>
-                <DetailRow label="Postcode" value={data.postcode} />
-                <DetailRow label="Region" value={data.region || 'N/A'} />
-                <DetailRow label="District" value={data.admin_district || 'N/A'} />
-                <DetailRow label="Country" value={data.country} />
-                <DetailRow 
-                  label="Coordinates" 
-                  value={`${data.latitude.toFixed(5)}, ${data.longitude.toFixed(5)}`} 
-                  copyable 
-                  onCopy={() => copyToClipboard(`${data.latitude}, ${data.longitude}`, 'Coordinates')}
-                />
-              </div>
-              
-            </div>
+               <div className="result-output" style={{ marginBottom: '1.5rem' }}>
+                 <DetailRow label="Postcode" value={data.postcode} />
+                 <DetailRow label="Region" value={data.region || 'N/A'} />
+                 <DetailRow label="District" value={data.admin_district || 'N/A'} />
+                 <DetailRow label="Country" value={data.country} />
+                 <DetailRow 
+                   label="Coordinates" 
+                   value={`${data.latitude.toFixed(5)}, ${data.longitude.toFixed(5)}`} 
+                   copyable 
+                   onCopy={() => copyToClipboard(`${data.latitude}, ${data.longitude}`, 'Coordinates')}
+                 />
+               </div>
+               
+             </div>
 
             <div className="map-wrapper" style={{ height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border-color)', position: 'relative', zIndex: 0 }}>
               <MapContainer 
@@ -169,17 +176,7 @@ const PostcodeLookup: React.FC = () => {
                 href={`https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="btn"
-                style={{ 
-                  position: 'absolute', 
-                  bottom: '12px', 
-                  right: '12px', 
-                  zIndex: 1000,
-                  textDecoration: 'none',
-                  fontSize: '0.85rem',
-                  padding: '0.5rem 0.75rem',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
-                }}
+                className="map-cta"
                 title="Open in Google Maps"
               >
                 <FiExternalLink /> Google Maps
