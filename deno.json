@@ -43,7 +43,8 @@
     "build": "deno run -A npm:@rsbuild/core@1.5.12/rsbuild build",
     "preview": "deno run -A npm:@rsbuild/core@1.5.12/rsbuild preview",
     "check": "deno fmt --check && deno lint",
-    "format": "deno fmt"
+    "format": "deno fmt",
+    "test": "deno test --no-check --allow-env --allow-read --allow-net"
   },
   "deploy": {
     "org": "vlcdn",
