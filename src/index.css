@@ -8,23 +8,23 @@
   --bg-body: #ffffff;
   --bg-card: #ffffff;
   --bg-subtle: #f9fafb;
-  
+
   --text-main: #0f172a;
   --text-muted: #475569;
   --text-faint: #94a3b8;
 
   --border-color: #e2e8f0;
   --border-hover: #cbd5e1;
-  
+
   --header-bg: rgba(255, 255, 255, 0.9);
-  
+
   --input-bg: #ffffff;
   --input-border: #cbd5e1;
-  
+
   --success-bg: #f0fdf4;
   --success-text: #15803d;
   --success-border: #bbf7d0;
-  
+
   --error-bg: #fef2f2;
   --error-text: #b91c1c;
   --error-border: #fecaca;
@@ -33,11 +33,11 @@
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   --bg-body: #111111;
   --bg-card: #1a1a1a;
   --bg-subtle: #222222;
-  
+
   --text-main: #f9fafb;
   --text-muted: #d1d5db;
   --text-faint: #6b7280;
@@ -46,14 +46,14 @@
   --border-hover: #444444;
 
   --header-bg: rgba(17, 17, 17, 0.9);
-  
+
   --input-bg: #1a1a1a;
   --input-border: #404040;
-  
+
   --success-bg: rgba(21, 128, 61, 0.2);
   --success-text: #4ade80;
   --success-border: rgba(21, 128, 61, 0.3);
-  
+
   --error-bg: rgba(185, 28, 28, 0.2);
   --error-text: #f87171;
   --error-border: rgba(185, 28, 28, 0.3);
@@ -417,8 +417,14 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .fade-in {
@@ -457,11 +463,17 @@ body {
   background: rgba(255, 255, 255, 0.98);
 }
 
-[data-theme="dark"] .map-cta {
+[data-theme='dark'] .map-cta {
   background: rgba(26, 26, 26, 0.92);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
-[data-theme="dark"] .map-cta:hover {
+[data-theme='dark'] .map-cta:hover {
   background: rgba(34, 34, 34, 0.98);
 }
+
+.btn-sm {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+}
+

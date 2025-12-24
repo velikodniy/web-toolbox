@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useCopyToClipboard } from '../hooks/useCopyToClipboard.ts';
 import { useDebounce } from '../hooks/useDebounce.ts';
@@ -66,16 +66,22 @@ const Base64Tool: React.FC = () => {
     <div className='tool-page'>
       <h1>Base64 Encoder/Decoder</h1>
       <p className='description'>
-        Real-time bidirectional Base64 conversion. Type in either box to convert.
+        Real-time bidirectional Base64 conversion. Type in either box to
+        convert.
       </p>
 
-      <div className="split-view">
+      <div className='split-view'>
         <div className='form-group'>
-          <div className="tool-control-group" style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}>
-            <label htmlFor='text-input' style={{ marginBottom: 0 }}>Text / Raw</label>
-            <button 
-              type="button"
-              className="btn btn-secondary" 
+          <div
+            className='tool-control-group'
+            style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}
+          >
+            <label htmlFor='text-input' style={{ marginBottom: 0 }}>
+              Text / Raw
+            </label>
+            <button
+              type='button'
+              className='btn btn-secondary'
               style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem' }}
               onClick={() => handleCopy(text)}
             >
@@ -92,11 +98,16 @@ const Base64Tool: React.FC = () => {
         </div>
 
         <div className='form-group'>
-          <div className="tool-control-group" style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}>
-            <label htmlFor='base64-input' style={{ marginBottom: 0 }}>Base64</label>
-            <button 
-              type="button"
-              className="btn btn-secondary" 
+          <div
+            className='tool-control-group'
+            style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}
+          >
+            <label htmlFor='base64-input' style={{ marginBottom: 0 }}>
+              Base64
+            </label>
+            <button
+              type='button'
+              className='btn btn-secondary'
               style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem' }}
               onClick={() => handleCopy(base64)}
             >

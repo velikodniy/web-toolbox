@@ -1,5 +1,11 @@
 import 'data:text/javascript,import "npm:global-jsdom@24.0.0/register";';
-import { render, screen, fireEvent, waitFor, cleanup } from 'npm:@testing-library/react@16.3.1';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from 'npm:@testing-library/react@16.3.1';
 import { expect } from 'npm:expect@30.2.0';
 import React from 'npm:react';
 
@@ -35,7 +41,8 @@ Object.defineProperty(window, 'matchMedia', {
 test('PostcodeLookup renders initial state', async () => {
   const { default: PostcodeLookup } = await import('./PostcodeLookup.tsx');
   render(<PostcodeLookup />);
-  expect(screen.getByRole('heading', { name: /Postcode Lookup/i })).toBeTruthy();
+  expect(screen.getByRole('heading', { name: /Postcode Lookup/i }))
+    .toBeTruthy();
   expect(screen.getByPlaceholderText(/SW1A 1AA/i)).toBeTruthy();
   cleanup();
 });
@@ -43,10 +50,10 @@ test('PostcodeLookup renders initial state', async () => {
 test('PostcodeLookup shows error for short postcode', async () => {
   const { default: PostcodeLookup } = await import('./PostcodeLookup.tsx');
   render(<PostcodeLookup />);
-  
+
   const input = screen.getByPlaceholderText(/SW1A 1AA/i);
   fireEvent.change(input, { target: { value: 'SW1' } });
-  
+
   await waitFor(() => {
     expect(screen.getByText(/too short/i)).toBeTruthy();
   }, { timeout: 1000 });
@@ -67,24 +74,25 @@ test('PostcodeLookup fetches and displays postcode data', async () => {
   };
 
   const originalFetch = globalThis.fetch;
-  globalThis.fetch = () => Promise.resolve({
-    ok: true,
-    json: () => Promise.resolve(mockData),
-  } as Response);
+  globalThis.fetch = () =>
+    Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve(mockData),
+    } as Response);
 
   const { default: PostcodeLookup } = await import('./PostcodeLookup.tsx');
   render(<PostcodeLookup />);
-  
+
   const input = screen.getByPlaceholderText(/SW1A 1AA/i);
   fireEvent.change(input, { target: { value: 'SW1A 1AA' } });
-  
+
   await waitFor(() => {
     expect(screen.getByText('Westminster')).toBeTruthy();
   }, { timeout: 2000 });
-  
+
   expect(screen.getByText('London')).toBeTruthy();
   expect(screen.getByText('England')).toBeTruthy();
-  
+
   globalThis.fetch = originalFetch;
   cleanup();
 });
@@ -95,14 +103,14 @@ test('PostcodeLookup handles API errors', async () => {
 
   const { default: PostcodeLookup } = await import('./PostcodeLookup.tsx');
   render(<PostcodeLookup />);
-  
+
   const input = screen.getByPlaceholderText(/SW1A 1AA/i);
   fireEvent.change(input, { target: { value: 'SW1A 1AA' } });
-  
+
   await waitFor(() => {
     expect(screen.getByText(/Failed to connect/i)).toBeTruthy();
   }, { timeout: 2000 });
-  
+
   globalThis.fetch = originalFetch;
   cleanup();
 });

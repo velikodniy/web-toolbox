@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useCopyToClipboard } from '../hooks/useCopyToClipboard.ts';
 import { useDebounce } from '../hooks/useDebounce.ts';
@@ -6,7 +6,9 @@ import { useDebounce } from '../hooks/useDebounce.ts';
 const URLEncoder: React.FC = () => {
   const [decoded, setDecoded] = useState<string>('');
   const [encoded, setEncoded] = useState<string>('');
-  const [lastEdited, setLastEdited] = useState<'decoded' | 'encoded'>('decoded');
+  const [lastEdited, setLastEdited] = useState<'decoded' | 'encoded'>(
+    'decoded',
+  );
   const [error, setError] = useState<string>('');
   const [, copy] = useCopyToClipboard();
 
@@ -69,13 +71,18 @@ const URLEncoder: React.FC = () => {
         Real-time bidirectional URL encoding/decoding.
       </p>
 
-      <div className="split-view">
+      <div className='split-view'>
         <div className='form-group'>
-          <div className="tool-control-group" style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}>
-            <label htmlFor='decoded-input' style={{ marginBottom: 0 }}>Decoded URL</label>
-            <button 
-              type="button"
-              className="btn btn-secondary" 
+          <div
+            className='tool-control-group'
+            style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}
+          >
+            <label htmlFor='decoded-input' style={{ marginBottom: 0 }}>
+              Decoded URL
+            </label>
+            <button
+              type='button'
+              className='btn btn-secondary'
               style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem' }}
               onClick={() => handleCopy(decoded)}
             >
@@ -92,11 +99,16 @@ const URLEncoder: React.FC = () => {
         </div>
 
         <div className='form-group'>
-          <div className="tool-control-group" style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}>
-            <label htmlFor='encoded-input' style={{ marginBottom: 0 }}>Encoded URL</label>
-            <button 
-              type="button"
-              className="btn btn-secondary" 
+          <div
+            className='tool-control-group'
+            style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}
+          >
+            <label htmlFor='encoded-input' style={{ marginBottom: 0 }}>
+              Encoded URL
+            </label>
+            <button
+              type='button'
+              className='btn btn-secondary'
               style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem' }}
               onClick={() => handleCopy(encoded)}
             >

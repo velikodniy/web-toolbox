@@ -1,5 +1,11 @@
 import 'data:text/javascript,import "npm:global-jsdom@24.0.0/register";';
-import { render, screen, fireEvent, waitFor, cleanup } from 'npm:@testing-library/react@16.3.1';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from 'npm:@testing-library/react@16.3.1';
 import { expect } from 'npm:expect@30.2.0';
 import Base64Tool from './Base64Tool.tsx';
 import React from 'npm:react';
@@ -27,7 +33,7 @@ test('Base64Tool encodes text to base64 in real-time', async () => {
   fireEvent.change(textInput, { target: { value: 'hello' } });
 
   await waitFor(() => {
-     expect((base64Input as HTMLTextAreaElement).value).toBe(btoa('hello'));
+    expect((base64Input as HTMLTextAreaElement).value).toBe(btoa('hello'));
   }, { timeout: 1000 });
   cleanup();
 });
@@ -41,7 +47,7 @@ test('Base64Tool decodes base64 to text in real-time', async () => {
   fireEvent.change(base64Input, { target: { value: encoded } });
 
   await waitFor(() => {
-     expect((textInput as HTMLTextAreaElement).value).toBe('world');
+    expect((textInput as HTMLTextAreaElement).value).toBe('world');
   }, { timeout: 1000 });
   cleanup();
 });

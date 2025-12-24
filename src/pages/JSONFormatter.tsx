@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useCopyToClipboard } from '../hooks/useCopyToClipboard.ts';
 import { useDebounce } from '../hooks/useDebounce.ts';
@@ -77,9 +77,11 @@ const JSONFormatter: React.FC = () => {
         Format, validate, and beautify JSON data.
       </p>
 
-      <div className="tool-controls">
+      <div className='tool-controls'>
         <div className='form-group' style={{ marginBottom: 0 }}>
-          <label htmlFor='indent' style={{ marginRight: '0.5rem' }}>Indent:</label>
+          <label htmlFor='indent' style={{ marginRight: '0.5rem' }}>
+            Indent:
+          </label>
           <input
             type='number'
             id='indent'
@@ -96,12 +98,28 @@ const JSONFormatter: React.FC = () => {
         </div>
       </div>
 
-      <div className="split-view">
-        <div className='form-group' style={{ display: 'flex', flexDirection: 'column' }}>
-          <div className="tool-control-group" style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}>
+      <div className='split-view'>
+        <div
+          className='form-group'
+          style={{ display: 'flex', flexDirection: 'column' }}
+        >
+          <div
+            className='tool-control-group'
+            style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}
+          >
             <label htmlFor='input' style={{ marginBottom: 0 }}>Input</label>
-            {valid && <span style={{ color: 'var(--success-text)', fontSize: '0.9rem' }}>Valid JSON!</span>}
-            {error && <span style={{ color: 'var(--error-text)', fontSize: '0.9rem' }}>{error}</span>}
+            {valid && (
+              <span
+                style={{ color: 'var(--success-text)', fontSize: '0.9rem' }}
+              >
+                Valid JSON!
+              </span>
+            )}
+            {error && (
+              <span style={{ color: 'var(--error-text)', fontSize: '0.9rem' }}>
+                {error}
+              </span>
+            )}
           </div>
           <textarea
             id='input'
@@ -113,8 +131,14 @@ const JSONFormatter: React.FC = () => {
           />
         </div>
 
-        <div className='form-group' style={{ display: 'flex', flexDirection: 'column' }}>
-          <div className="tool-control-group" style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}>
+        <div
+          className='form-group'
+          style={{ display: 'flex', flexDirection: 'column' }}
+        >
+          <div
+            className='tool-control-group'
+            style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}
+          >
             <label htmlFor='output' style={{ marginBottom: 0 }}>Output</label>
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               <button
@@ -152,7 +176,11 @@ const JSONFormatter: React.FC = () => {
             value={output}
             readOnly
             placeholder='Formatted output will appear here...'
-            style={{ flex: 1, minHeight: '400px', backgroundColor: 'var(--bg-subtle)' }}
+            style={{
+              flex: 1,
+              minHeight: '400px',
+              backgroundColor: 'var(--bg-subtle)',
+            }}
           />
         </div>
       </div>

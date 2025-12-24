@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useCopyToClipboard } from '../hooks/useCopyToClipboard.ts';
 import { useDebounce } from '../hooks/useDebounce.ts';
@@ -64,8 +64,13 @@ const HashGenerator: React.FC = () => {
       </p>
 
       <div className='form-group'>
-        <div className="tool-control-group" style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}>
-          <label htmlFor='input' style={{ marginBottom: 0 }}>Text to hash</label>
+        <div
+          className='tool-control-group'
+          style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}
+        >
+          <label htmlFor='input' style={{ marginBottom: 0 }}>
+            Text to hash
+          </label>
         </div>
         <textarea
           id='input'
@@ -82,9 +87,15 @@ const HashGenerator: React.FC = () => {
 
           {hashes.sha1 && (
             <div style={{ marginBottom: '1.5rem' }}>
-              <div className="tool-control-group" style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}>
-                 <h4 style={{ margin: 0, color: '#374151' }}>SHA-1:</h4>
-                 <button
+              <div
+                className='tool-control-group'
+                style={{
+                  marginBottom: '0.5rem',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h4 style={{ margin: 0, color: '#374151' }}>SHA-1:</h4>
+                <button
                   type='button'
                   className='btn btn-secondary'
                   style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem' }}
@@ -99,9 +110,15 @@ const HashGenerator: React.FC = () => {
 
           {hashes.sha256 && (
             <div style={{ marginBottom: '1.5rem' }}>
-              <div className="tool-control-group" style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}>
-                 <h4 style={{ margin: 0, color: '#374151' }}>SHA-256:</h4>
-                 <button
+              <div
+                className='tool-control-group'
+                style={{
+                  marginBottom: '0.5rem',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h4 style={{ margin: 0, color: '#374151' }}>SHA-256:</h4>
+                <button
                   type='button'
                   className='btn btn-secondary'
                   style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem' }}
