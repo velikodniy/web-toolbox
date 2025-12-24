@@ -1,6 +1,6 @@
 import 'data:text/javascript,import "npm:global-jsdom@24.0.0/register";';
-import { render, screen, fireEvent, waitFor, cleanup } from 'npm:@testing-library/react@16.0.0';
-import { expect } from 'npm:expect@29.7.0';
+import { render, screen, fireEvent, waitFor, cleanup } from 'npm:@testing-library/react@16.3.1';
+import { expect } from 'npm:expect@30.2.0';
 import Base64Tool from './Base64Tool.tsx';
 import React from 'npm:react';
 
