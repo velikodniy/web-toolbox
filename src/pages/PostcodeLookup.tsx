@@ -105,7 +105,7 @@ const PostcodeLookup: React.FC = () => {
             onChange={(e) => setInput(e.target.value)}
             placeholder="e.g. SW1A 1AA"
             maxLength={10}
-            style={{ fontSize: '1.2rem', letterSpacing: '0.05em', textTransform: 'uppercase' }}
+            style={{ fontSize: '1.2rem', letterSpacing: '0.05em' }}
           />
           {loading && (
             <div style={{ 
