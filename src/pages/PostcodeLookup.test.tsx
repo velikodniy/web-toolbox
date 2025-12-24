@@ -5,10 +5,31 @@ import React from 'npm:react';
 
 const test = Deno.test;
 
+// Mock navigator properties required by Leaflet
+Object.defineProperty(navigator, 'platform', {
+  value: 'MacIntel',
+  writable: true,
+});
+
 Object.assign(navigator, {
   clipboard: {
     writeText: () => Promise.resolve(),
   },
+});
+
+// Mock window.matchMedia for Leaflet
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: (query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: () => {},
+    removeListener: () => {},
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    dispatchEvent: () => false,
+  }),
 });
 
 test('PostcodeLookup renders initial state', async () => {
