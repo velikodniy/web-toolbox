@@ -1,14 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiKey, FiCode, FiAlignLeft, FiLink, FiShield, FiMapPin } from 'react-icons/fi';
+import {
+  FiAlignLeft,
+  FiCode,
+  FiKey,
+  FiLink,
+  FiMapPin,
+  FiShield,
+} from 'react-icons/fi';
 
 const Home: React.FC = () => {
   const tools = [
     {
-      name: 'UUID Generator',
-      description:
-        'Generate unique identifiers (UUID v4) for your applications',
-      path: '/uuid-generator',
+      name: 'UUID Tool',
+      description: 'Generate and analyze UUIDs',
+      path: '/uuid',
       icon: <FiKey />,
     },
     {

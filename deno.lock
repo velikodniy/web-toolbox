@@ -22,7 +22,8 @@
     "npm:react-leaflet@5": "5.0.0_leaflet@1.9.4_react@19.2.3_react-dom@19.2.3__react@19.2.3",
     "npm:react-router-dom@^7.11.0": "7.11.0_react@19.2.3_react-dom@19.2.3__react@19.2.3",
     "npm:react@*": "19.2.3",
-    "npm:react@^19.2.3": "19.2.3"
+    "npm:react@^19.2.3": "19.2.3",
+    "npm:uuid@13": "13.0.0"
   },
   "npm": {
     "@asamuzakjp/css-color@3.2.0_@csstools+css-parser-algorithms@3.0.5__@csstools+css-tokenizer@3.0.4_@csstools+css-tokenizer@3.0.4": {
@@ -1925,6 +1926,10 @@
         "requires-port"
       ]
     },
+    "uuid@13.0.0": {
+      "integrity": "sha512-XQegIaBTVUjSHliKqcnFqYypAd4S+WCYt5NIeRs6w/UAry7z8Y9j5ZwRRL4kzq9U3sD6v+85er9FvkEaBpji2w==",
+      "bin": true
+    },
     "w3c-xmlserializer@5.0.0": {
       "integrity": "sha512-o8qghlI8NZHU1lLPrpi2+Uq7abh4GGPpYANlalzWxyWteJOCsr/P+oPBA49TOLu5FTZO4d3F9MnWJfiMo4BkmA==",
       "dependencies": [
@@ -1994,7 +1999,8 @@
       "npm:react-icons@^5.5.0",
       "npm:react-leaflet@5",
       "npm:react-router-dom@^7.11.0",
-      "npm:react@^19.2.3"
+      "npm:react@^19.2.3",
+      "npm:uuid@13"
     ]
   }
 }

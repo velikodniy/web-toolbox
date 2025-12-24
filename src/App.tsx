@@ -4,7 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { FaGithub, FaMoon, FaSun } from 'react-icons/fa';
 import { HiExternalLink } from 'react-icons/hi';
 import Home from './pages/Home.tsx';
-import UUIDGenerator from './pages/UUIDGenerator.tsx';
+import UUIDTool from './pages/UUIDTool.tsx';
 import Base64Tool from './pages/Base64Tool.tsx';
 import JSONFormatter from './pages/JSONFormatter.tsx';
 import URLEncoder from './pages/URLEncoder.tsx';
@@ -58,11 +58,13 @@ function App() {
               </Link>
               <nav className='nav'>
                 <button
-                  type="button"
+                  type='button'
                   onClick={toggleTheme}
                   className='theme-toggle'
                   aria-label='Toggle theme'
-                  title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+                  title={`Switch to ${
+                    theme === 'light' ? 'dark' : 'light'
+                  } mode`}
                 >
                   {theme === 'light' ? <FaMoon /> : <FaSun />}
                 </button>
@@ -89,7 +91,7 @@ function App() {
           <div className='container'>
             <Routes>
               <Route path='/' element={<Home />} />
-              <Route path='/uuid-generator' element={<UUIDGenerator />} />
+              <Route path='/uuid' element={<UUIDTool />} />
               <Route path='/base64-tool' element={<Base64Tool />} />
               <Route path='/json-formatter' element={<JSONFormatter />} />
               <Route path='/url-encoder' element={<URLEncoder />} />
