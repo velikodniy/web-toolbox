@@ -1,144 +1,121 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useCopyToClipboard } from '../hooks/useCopyToClipboard.ts';
+import { useDebounce } from '../hooks/useDebounce.ts';
 
 const URLEncoder: React.FC = () => {
-  const [input, setInput] = useState<string>('');
-  const [output, setOutput] = useState<string | null>(null);
-  const [mode, setMode] = useState<'encode' | 'decode'>('encode');
+  const [decoded, setDecoded] = useState<string>('');
+  const [encoded, setEncoded] = useState<string>('');
+  const [lastEdited, setLastEdited] = useState<'decoded' | 'encoded'>('decoded');
   const [error, setError] = useState<string>('');
   const [, copy] = useCopyToClipboard();
 
-  const handleEncode = () => {
-    try {
-      const encoded = encodeURIComponent(input);
-      setOutput(encoded);
-      setError('');
-    } catch (_err) {
-      setError('Failed to encode URL.');
-      setOutput(null);
+  const debouncedDecoded = useDebounce(decoded, 300);
+  const debouncedEncoded = useDebounce(encoded, 300);
+
+  useEffect(() => {
+    if (lastEdited === 'decoded') {
+      try {
+        const result = encodeURIComponent(debouncedDecoded);
+        setEncoded(result);
+        setError('');
+      } catch (_err) {
+        setError('Failed to encode.');
+      }
     }
+  }, [debouncedDecoded, lastEdited]);
+
+  useEffect(() => {
+    if (lastEdited === 'encoded') {
+      if (!debouncedEncoded.trim()) {
+        setDecoded('');
+        setError('');
+        return;
+      }
+      try {
+        const result = decodeURIComponent(debouncedEncoded);
+        setDecoded(result);
+        setError('');
+      } catch (_err) {
+        setError('Invalid URL encoding.');
+      }
+    }
+  }, [debouncedEncoded, lastEdited]);
+
+  const handleDecodedChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setLastEdited('decoded');
+    setDecoded(e.target.value);
   };
 
-  const handleDecode = () => {
-    try {
-      const decoded = decodeURIComponent(input);
-      setOutput(decoded);
-      setError('');
-    } catch (_err) {
-      setError('Invalid URL encoding. Please check your input.');
-      setOutput(null);
-    }
+  const handleEncodedChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setLastEdited('encoded');
+    setEncoded(e.target.value);
   };
 
-  const handleProcess = () => {
-    if (mode === 'encode') {
-      handleEncode();
-    } else {
-      handleDecode();
-    }
-  };
-
-  const handleCopy = async () => {
-    const success = await copy(output);
+  const handleCopy = async (content: string) => {
+    if (!content) return;
+    const success = await copy(content);
     if (success) {
-      toast.success('Copied to clipboard!');
+      toast.success('Copied!');
     } else {
       toast.error('Failed to copy');
     }
-  };
-
-  const clearAll = () => {
-    setInput('');
-    setOutput(null);
-    setError('');
   };
 
   return (
     <div className='tool-page'>
       <h1>URL Encoder/Decoder</h1>
       <p className='description'>
-        Encode URLs to make them safe for transmission or decode URL-encoded
-        strings back to readable format. Useful for handling special characters
-        in URLs and query parameters.
+        Real-time bidirectional URL encoding/decoding.
       </p>
 
-      <div className='form-group'>
-        <label>Mode:</label>
-        <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
-          <label
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-          >
-            <input
-              type='radio'
-              value='encode'
-              checked={mode === 'encode'}
-              onChange={(e) => setMode(e.target.value as 'encode' | 'decode')}
-            />
-            Encode URL
-          </label>
-          <label
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-          >
-            <input
-              type='radio'
-              value='decode'
-              checked={mode === 'decode'}
-              onChange={(e) => setMode(e.target.value as 'encode' | 'decode')}
-            />
-            Decode URL
-          </label>
+      <div className="split-view">
+        <div className='form-group'>
+          <div className="tool-control-group" style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}>
+            <label htmlFor='decoded-input' style={{ marginBottom: 0 }}>Decoded URL</label>
+            <button 
+              type="button"
+              className="btn btn-secondary" 
+              style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem' }}
+              onClick={() => handleCopy(decoded)}
+            >
+              Copy
+            </button>
+          </div>
+          <textarea
+            id='decoded-input'
+            className='form-textarea'
+            value={decoded}
+            onChange={handleDecodedChange}
+            placeholder='Type decoded URL here... (e.g., https://example.com/foo bar)'
+          />
         </div>
-      </div>
 
-      <div className='form-group'>
-        <label htmlFor='input'>
-          {mode === 'encode'
-            ? 'Text/URL to encode:'
-            : 'URL-encoded string to decode:'}
-        </label>
-        <textarea
-          id='input'
-          className='form-textarea'
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={mode === 'encode'
-            ? 'Enter text or URL to encode... e.g., Hello World! or https://example.com/search?q=hello world'
-            : 'Enter URL-encoded string to decode... e.g., Hello%20World%21'}
-        />
-      </div>
-
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <button
-          type='button'
-          className='btn'
-          onClick={handleProcess}
-          disabled={!input.trim()}
-        >
-          {mode === 'encode' ? 'Encode' : 'Decode'}
-        </button>
-        <button type='button' className='btn btn-secondary' onClick={clearAll}>
-          Clear
-        </button>
+        <div className='form-group'>
+          <div className="tool-control-group" style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}>
+            <label htmlFor='encoded-input' style={{ marginBottom: 0 }}>Encoded URL</label>
+            <button 
+              type="button"
+              className="btn btn-secondary" 
+              style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem' }}
+              onClick={() => handleCopy(encoded)}
+            >
+              Copy
+            </button>
+          </div>
+          <textarea
+            id='encoded-input'
+            className='form-textarea'
+            value={encoded}
+            onChange={handleEncodedChange}
+            placeholder='Type encoded URL here... (e.g., https%3A%2F%2Fexample.com%2Ffoo%20bar)'
+          />
+        </div>
       </div>
 
       {error && (
         <div className='error-message'>
           {error}
-        </div>
-      )}
-
-      {output && (
-        <div className='result-section'>
-          <h3>Result:</h3>
-          <div className='result-output'>{output}</div>
-          <button
-            type='button'
-            className='btn btn-secondary'
-            onClick={handleCopy}
-          >
-            Copy Result
-          </button>
         </div>
       )}
     </div>

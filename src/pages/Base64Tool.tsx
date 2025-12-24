@@ -1,141 +1,121 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useCopyToClipboard } from '../hooks/useCopyToClipboard.ts';
+import { useDebounce } from '../hooks/useDebounce.ts';
 
 const Base64Tool: React.FC = () => {
-  const [input, setInput] = useState<string>('');
-  const [output, setOutput] = useState<string | null>(null);
-  const [mode, setMode] = useState<'encode' | 'decode'>('encode');
+  const [text, setText] = useState<string>('');
+  const [base64, setBase64] = useState<string>('');
+  const [lastEdited, setLastEdited] = useState<'text' | 'base64'>('text');
   const [error, setError] = useState<string>('');
   const [, copy] = useCopyToClipboard();
 
-  const handleEncode = () => {
-    try {
-      const encoded = btoa(input);
-      setOutput(encoded);
-      setError('');
-    } catch (_err) {
-      setError('Failed to encode. Please check your input.');
-      setOutput(null);
+  const debouncedText = useDebounce(text, 300);
+  const debouncedBase64 = useDebounce(base64, 300);
+
+  useEffect(() => {
+    if (lastEdited === 'text') {
+      try {
+        const encoded = btoa(debouncedText);
+        setBase64(encoded);
+        setError('');
+      } catch (_err) {
+        setError('Failed to encode.');
+      }
     }
+  }, [debouncedText, lastEdited]);
+
+  useEffect(() => {
+    if (lastEdited === 'base64') {
+      if (!debouncedBase64.trim()) {
+        setText('');
+        setError('');
+        return;
+      }
+      try {
+        const decoded = atob(debouncedBase64);
+        setText(decoded);
+        setError('');
+      } catch (_err) {
+        setError('Invalid Base64 string.');
+      }
+    }
+  }, [debouncedBase64, lastEdited]);
+
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setLastEdited('text');
+    setText(e.target.value);
   };
 
-  const handleDecode = () => {
-    try {
-      const decoded = atob(input);
-      setOutput(decoded);
-      setError('');
-    } catch (_err) {
-      setError('Invalid Base64 string. Please check your input.');
-      setOutput(null);
-    }
+  const handleBase64Change = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setLastEdited('base64');
+    setBase64(e.target.value);
   };
 
-  const handleProcess = () => {
-    if (mode === 'encode') {
-      handleEncode();
-    } else {
-      handleDecode();
-    }
-  };
-
-  const handleCopy = async () => {
-    const success = await copy(output);
+  const handleCopy = async (content: string) => {
+    if (!content) return;
+    const success = await copy(content);
     if (success) {
-      toast.success('Copied to clipboard!');
+      toast.success('Copied!');
     } else {
       toast.error('Failed to copy');
     }
-  };
-
-  const clearAll = () => {
-    setInput('');
-    setOutput(null);
-    setError('');
   };
 
   return (
     <div className='tool-page'>
       <h1>Base64 Encoder/Decoder</h1>
       <p className='description'>
-        Encode text to Base64 or decode Base64 strings back to readable text.
-        Base64 encoding is commonly used for data transmission and storage.
+        Real-time bidirectional Base64 conversion. Type in either box to convert.
       </p>
 
-      <div className='form-group'>
-        <label>Mode:</label>
-        <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
-          <label
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-          >
-            <input
-              type='radio'
-              value='encode'
-              checked={mode === 'encode'}
-              onChange={(e) => setMode(e.target.value as 'encode' | 'decode')}
-            />
-            Encode to Base64
-          </label>
-          <label
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-          >
-            <input
-              type='radio'
-              value='decode'
-              checked={mode === 'decode'}
-              onChange={(e) => setMode(e.target.value as 'encode' | 'decode')}
-            />
-            Decode from Base64
-          </label>
+      <div className="split-view">
+        <div className='form-group'>
+          <div className="tool-control-group" style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}>
+            <label htmlFor='text-input' style={{ marginBottom: 0 }}>Text / Raw</label>
+            <button 
+              type="button"
+              className="btn btn-secondary" 
+              style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem' }}
+              onClick={() => handleCopy(text)}
+            >
+              Copy
+            </button>
+          </div>
+          <textarea
+            id='text-input'
+            className='form-textarea'
+            value={text}
+            onChange={handleTextChange}
+            placeholder='Type text here...'
+          />
         </div>
-      </div>
 
-      <div className='form-group'>
-        <label htmlFor='input'>
-          {mode === 'encode' ? 'Text to encode:' : 'Base64 string to decode:'}
-        </label>
-        <textarea
-          id='input'
-          className='form-textarea'
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={mode === 'encode'
-            ? 'Enter text to encode...'
-            : 'Enter Base64 string to decode...'}
-        />
-      </div>
-
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <button
-          type='button'
-          className='btn'
-          onClick={handleProcess}
-          disabled={!input.trim()}
-        >
-          {mode === 'encode' ? 'Encode' : 'Decode'}
-        </button>
-        <button type='button' className='btn btn-secondary' onClick={clearAll}>
-          Clear
-        </button>
+        <div className='form-group'>
+          <div className="tool-control-group" style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}>
+            <label htmlFor='base64-input' style={{ marginBottom: 0 }}>Base64</label>
+            <button 
+              type="button"
+              className="btn btn-secondary" 
+              style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem' }}
+              onClick={() => handleCopy(base64)}
+            >
+              Copy
+            </button>
+          </div>
+          <textarea
+            id='base64-input'
+            className='form-textarea'
+            value={base64}
+            onChange={handleBase64Change}
+            placeholder='Type Base64 here...'
+          />
+        </div>
       </div>
 
       {error && (
         <div className='error-message'>
           {error}
-        </div>
-      )}
-
-      {output && (
-        <div className='result-section'>
-          <h3>Result:</h3>
-          <div className='result-output'>{output}</div>
-          <button
-            type='button'
-            className='btn btn-secondary'
-            onClick={handleCopy}
-          >
-            Copy Result
-          </button>
         </div>
       )}
     </div>

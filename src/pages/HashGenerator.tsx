@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useCopyToClipboard } from '../hooks/useCopyToClipboard.ts';
+import { useDebounce } from '../hooks/useDebounce.ts';
 
 const HashGenerator: React.FC = () => {
   const [input, setInput] = useState<string>('');
@@ -11,55 +12,61 @@ const HashGenerator: React.FC = () => {
   }>({ md5: null, sha1: null, sha256: null });
   const [, copy] = useCopyToClipboard();
 
-  const generateHashes = async () => {
-    if (!input.trim()) return;
+  const debouncedInput = useDebounce(input, 300);
 
-    const encoder = new TextEncoder();
-    const data = encoder.encode(input);
+  useEffect(() => {
+    const generate = async () => {
+      if (!debouncedInput.trim()) {
+        setHashes({ md5: null, sha1: null, sha256: null });
+        return;
+      }
 
-    try {
-      // Generate SHA-1
-      const sha1Buffer = await crypto.subtle.digest('SHA-1', data);
-      const sha1 = Array.from(new Uint8Array(sha1Buffer))
-        .map((b) => b.toString(16).padStart(2, '0'))
-        .join('');
+      const encoder = new TextEncoder();
+      const data = encoder.encode(debouncedInput);
 
-      // Generate SHA-256
-      const sha256Buffer = await crypto.subtle.digest('SHA-256', data);
-      const sha256 = Array.from(new Uint8Array(sha256Buffer))
-        .map((b) => b.toString(16).padStart(2, '0'))
-        .join('');
+      try {
+        // Generate SHA-1
+        const sha1Buffer = await crypto.subtle.digest('SHA-1', data);
+        const sha1 = Array.from(new Uint8Array(sha1Buffer))
+          .map((b) => b.toString(16).padStart(2, '0'))
+          .join('');
 
-      setHashes({ md5: null, sha1, sha256 });
-    } catch (error) {
-      console.error('Error generating hashes:', error);
-    }
-  };
+        // Generate SHA-256
+        const sha256Buffer = await crypto.subtle.digest('SHA-256', data);
+        const sha256 = Array.from(new Uint8Array(sha256Buffer))
+          .map((b) => b.toString(16).padStart(2, '0'))
+          .join('');
+
+        setHashes({ md5: null, sha1, sha256 });
+      } catch (error) {
+        console.error('Error generating hashes:', error);
+      }
+    };
+
+    generate();
+  }, [debouncedInput]);
 
   const handleCopy = async (text: string, type: string) => {
+    if (!text) return;
     const success = await copy(text);
     if (success) {
-      toast.success(`${type} hash copied to clipboard!`);
+      toast.success(`${type} hash copied!`);
     } else {
       toast.error('Failed to copy');
     }
-  };
-
-  const clearAll = () => {
-    setInput('');
-    setHashes({ md5: null, sha1: null, sha256: null });
   };
 
   return (
     <div className='tool-page'>
       <h1>Hash Generator</h1>
       <p className='description'>
-        Generate SHA-1 and SHA-256 hashes from your input text. Useful for data
-        integrity verification and checksums.
+        Real-time SHA-1 and SHA-256 hash generation.
       </p>
 
       <div className='form-group'>
-        <label htmlFor='input'>Text to hash:</label>
+        <div className="tool-control-group" style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}>
+          <label htmlFor='input' style={{ marginBottom: 0 }}>Text to hash</label>
+        </div>
         <textarea
           id='input'
           className='form-textarea'
@@ -69,55 +76,41 @@ const HashGenerator: React.FC = () => {
         />
       </div>
 
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <button
-          type='button'
-          className='btn'
-          onClick={generateHashes}
-          disabled={!input.trim()}
-        >
-          Generate Hashes
-        </button>
-        <button type='button' className='btn btn-secondary' onClick={clearAll}>
-          Clear
-        </button>
-      </div>
-
       {(hashes.sha1 || hashes.sha256) && (
         <div className='result-section'>
           <h3>Generated Hashes:</h3>
 
           {hashes.sha1 && (
             <div style={{ marginBottom: '1.5rem' }}>
-              <h4 style={{ marginBottom: '0.5rem', color: '#374151' }}>
-                SHA-1:
-              </h4>
+              <div className="tool-control-group" style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}>
+                 <h4 style={{ margin: 0, color: '#374151' }}>SHA-1:</h4>
+                 <button
+                  type='button'
+                  className='btn btn-secondary'
+                  style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem' }}
+                  onClick={() => handleCopy(hashes.sha1!, 'SHA-1')}
+                >
+                  Copy
+                </button>
+              </div>
               <div className='result-output'>{hashes.sha1}</div>
-              <button
-                type='button'
-                className='btn btn-secondary'
-                onClick={() => handleCopy(hashes.sha1, 'SHA-1')}
-                style={{ marginTop: '0.5rem' }}
-              >
-                Copy SHA-1
-              </button>
             </div>
           )}
 
           {hashes.sha256 && (
             <div style={{ marginBottom: '1.5rem' }}>
-              <h4 style={{ marginBottom: '0.5rem', color: '#374151' }}>
-                SHA-256:
-              </h4>
+              <div className="tool-control-group" style={{ marginBottom: '0.5rem', justifyContent: 'space-between' }}>
+                 <h4 style={{ margin: 0, color: '#374151' }}>SHA-256:</h4>
+                 <button
+                  type='button'
+                  className='btn btn-secondary'
+                  style={{ padding: '0.25rem 0.5rem', fontSize: '0.8rem' }}
+                  onClick={() => handleCopy(hashes.sha256!, 'SHA-256')}
+                >
+                  Copy
+                </button>
+              </div>
               <div className='result-output'>{hashes.sha256}</div>
-              <button
-                type='button'
-                className='btn btn-secondary'
-                onClick={() => handleCopy(hashes.sha256, 'SHA-256')}
-                style={{ marginTop: '0.5rem' }}
-              >
-                Copy SHA-256
-              </button>
             </div>
           )}
         </div>
