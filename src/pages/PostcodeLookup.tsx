@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDebounce } from '../hooks/useDebounce.ts';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { toast } from 'react-hot-toast';
-import { FiCopy, FiNavigation } from 'react-icons/fi';
+import { FiCopy, FiExternalLink } from 'react-icons/fi';
 import L from 'leaflet';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -145,24 +145,6 @@ const PostcodeLookup: React.FC = () => {
                 />
               </div>
               
-              <div style={{ display: 'flex', gap: '1rem' }}>
-                <button 
-                    type="button"
-                    className="btn" 
-                    onClick={() => copyToClipboard(`${data.postcode}, ${data.country}`, 'Address')}
-                >
-                    <FiCopy /> Copy Address
-                </button>
-                <a 
-                    href={`https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="btn btn-secondary"
-                    style={{ textDecoration: 'none' }}
-                >
-                    <FiNavigation /> Open in Maps
-                </a>
-              </div>
             </div>
 
             <div className="map-wrapper" style={{ height: '400px', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border-color)', position: 'relative', zIndex: 0 }}>
@@ -183,6 +165,25 @@ const PostcodeLookup: React.FC = () => {
                 </Marker>
                 <MapUpdater center={[data.latitude, data.longitude]} />
               </MapContainer>
+              <a 
+                href={`https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="btn"
+                style={{ 
+                  position: 'absolute', 
+                  bottom: '12px', 
+                  right: '12px', 
+                  zIndex: 1000,
+                  textDecoration: 'none',
+                  fontSize: '0.85rem',
+                  padding: '0.5rem 0.75rem',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
+                }}
+                title="Open in Google Maps"
+              >
+                <FiExternalLink /> Google Maps
+              </a>
             </div>
           </div>
         </div>
