@@ -1,5 +1,5 @@
 import 'data:text/javascript,import "npm:global-jsdom@24.0.0/register";';
-import { render, screen, fireEvent, waitFor, cleanup } from 'npm:@testing-library/react@14.2.0';
+import { render, screen, fireEvent, waitFor, cleanup } from 'npm:@testing-library/react@16.0.0';
 import { expect } from 'npm:expect@29.7.0';
 import UUIDGenerator from './UUIDGenerator.tsx';
 import React from 'npm:react';

@@ -40,7 +40,7 @@
     "leaflet": "npm:leaflet@^1.9.4",
     "react-leaflet": "npm:react-leaflet@^5.0.0-rc.1",
     "@types/leaflet": "npm:@types/leaflet@^1.9.16",
-    "@testing-library/react": "npm:@testing-library/react@^14.2.0",
+    "@testing-library/react": "npm:@testing-library/react@^16.0.0",
     "@jest/globals": "npm:@jest/globals@^29.7.0",
     "expect": "npm:expect@^29.7.0"
   },
