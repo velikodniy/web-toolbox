@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDebounce } from '../hooks/useDebounce.ts';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { toast } from 'react-hot-toast';
-import { FiCopy, FiExternalLink } from 'react-icons/fi';
+import { FiCopy, FiExternalLink, FiShare2 } from 'react-icons/fi';
 import L from 'leaflet';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -96,6 +96,14 @@ const PostcodeLookup: React.FC = () => {
     toast.success(`${label} copied!`);
   };
 
+  const shareLink = () => {
+    const trimmed = input.trim();
+    if (!trimmed) return;
+    const url = `${window.location.origin}${window.location.pathname}?postcode=${encodeURIComponent(trimmed)}`;
+    navigator.clipboard.writeText(url);
+    toast.success('Link copied!');
+  };
+
   return (
     <div className="tool-page">
       <h1>Postcode Lookup</h1>
@@ -105,27 +113,40 @@ const PostcodeLookup: React.FC = () => {
 
       <div className="form-group">
         <label htmlFor="postcode-input">Enter UK Postcode</label>
-        <div style={{ position: 'relative' }}>
-          <input
-            id="postcode-input"
-            className="form-input"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="e.g. SW1A 1AA"
-            maxLength={10}
-            style={{ fontSize: '1.2rem', letterSpacing: '0.05em' }}
-          />
-          {loading && (
-            <div style={{ 
-              position: 'absolute', 
-              right: '12px', 
-              top: '50%', 
-              transform: 'translateY(-50%)',
-              color: 'var(--text-muted)'
-            }}>
-              Loading...
-            </div>
-          )}
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          <div style={{ position: 'relative', maxWidth: '200px' }}>
+            <input
+              id="postcode-input"
+              className="form-input"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="e.g. SW1A 1AA"
+              maxLength={10}
+              style={{ fontSize: '1.1rem', letterSpacing: '0.05em' }}
+            />
+            {loading && (
+              <div style={{ 
+                position: 'absolute', 
+                right: '12px', 
+                top: '50%', 
+                transform: 'translateY(-50%)',
+                color: 'var(--text-muted)',
+                fontSize: '0.8rem'
+              }}>
+                ...
+              </div>
+            )}
+          </div>
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={shareLink}
+            disabled={!input.trim()}
+            title="Copy link to this postcode"
+            style={{ opacity: input.trim() ? 1 : 0.4 }}
+          >
+            <FiShare2 />
+          </button>
         </div>
       </div>
 
