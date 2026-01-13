@@ -6,10 +6,9 @@ import { useDebounce } from '../hooks/useDebounce.ts';
 const HashGenerator: React.FC = () => {
   const [input, setInput] = useState<string>('');
   const [hashes, setHashes] = useState<{
-    md5: string | null;
     sha1: string | null;
     sha256: string | null;
-  }>({ md5: null, sha1: null, sha256: null });
+  }>({ sha1: null, sha256: null });
   const [, copy] = useCopyToClipboard();
 
   const debouncedInput = useDebounce(input, 300);
@@ -17,7 +16,7 @@ const HashGenerator: React.FC = () => {
   useEffect(() => {
     const generate = async () => {
       if (!debouncedInput.trim()) {
-        setHashes({ md5: null, sha1: null, sha256: null });
+        setHashes({ sha1: null, sha256: null });
         return;
       }
 
@@ -37,7 +36,7 @@ const HashGenerator: React.FC = () => {
           .map((b) => b.toString(16).padStart(2, '0'))
           .join('');
 
-        setHashes({ md5: null, sha1, sha256 });
+        setHashes({ sha1, sha256 });
       } catch (error) {
         console.error('Error generating hashes:', error);
       }
@@ -94,7 +93,7 @@ const HashGenerator: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h4 style={{ margin: 0, color: '#374151' }}>SHA-1:</h4>
+                <h4 style={{ margin: 0, color: 'var(--text-main)' }}>SHA-1:</h4>
                 <button
                   type='button'
                   className='btn btn-secondary'
@@ -117,7 +116,9 @@ const HashGenerator: React.FC = () => {
                   justifyContent: 'space-between',
                 }}
               >
-                <h4 style={{ margin: 0, color: '#374151' }}>SHA-256:</h4>
+                <h4 style={{ margin: 0, color: 'var(--text-main)' }}>
+                  SHA-256:
+                </h4>
                 <button
                   type='button'
                   className='btn btn-secondary'

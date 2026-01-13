@@ -4,13 +4,7 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "lib": ["dom", "dom.iterable", "es6", "esnext"],
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "noEmit": true,
     "strict": true,
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "exactOptionalPropertyTypes": true

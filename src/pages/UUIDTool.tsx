@@ -18,11 +18,6 @@ import {
 
 type NamespaceOption = 'DNS' | 'URL' | 'OID' | 'X500' | 'custom';
 
-type ToastMethods = {
-  success: (message: string) => string;
-  error: (message: string) => string;
-};
-
 const VERSION_OPTIONS: { value: UuidVersion; label: string }[] = [
   { value: 'v1', label: 'v1 (Timestamp + MAC)' },
   { value: 'v3', label: 'v3 (MD5 hash)' },
@@ -151,9 +146,9 @@ const UUIDTool = () => {
   const handleCopy = async (text: string) => {
     const success = await copy(text);
     if (success) {
-      (toast as unknown as ToastMethods).success('Copied!');
+      toast.success('Copied!');
     } else {
-      (toast as unknown as ToastMethods).error('Failed to copy');
+      toast.error('Failed to copy');
     }
   };
 
@@ -252,7 +247,7 @@ const UUIDTool = () => {
                 {part.hex}
                 {part.decodedValue && (
                   <span className='uuid-decoded-value'>
-                    {' '}({part.decodedValue})
+                    ({part.decodedValue})
                   </span>
                 )}
               </td>
@@ -466,7 +461,8 @@ const UUIDTool = () => {
                   </>
                 )}
               </div>
-              {(analysis.version === 1 || analysis.version === 6 || analysis.version === 7) && (
+              {(analysis.version === 1 || analysis.version === 6 ||
+                analysis.version === 7) && (
                 <div className='uuid-summary-timestamps'>
                   <div className='uuid-summary-card'>
                     <div className='uuid-summary-label'>Timestamp (UTC)</div>
@@ -488,7 +484,8 @@ const UUIDTool = () => {
                 <div className='uuid-summary-hash'>
                   <div className='uuid-summary-card'>
                     <div className='uuid-summary-label'>
-                      {analysis.version === 3 ? 'MD5' : 'SHA-1'} Hash (truncated)
+                      {analysis.version === 3 ? 'MD5' : 'SHA-1'}{' '}
+                      Hash (truncated)
                     </div>
                     <div className='uuid-summary-value uuid-summary-value-mono uuid-hash-value'>
                       {analysis.hashHex}

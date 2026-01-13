@@ -1,7 +1,6 @@
 import 'data:text/javascript,import "npm:global-jsdom@24.0.0/register";';
 import { cleanup, render, screen } from 'npm:@testing-library/react@16.3.1';
 import { expect } from 'npm:expect@30.2.0';
-import React from 'npm:react';
 
 const test = Deno.test;
 
@@ -74,7 +73,7 @@ test('GPXDrawTool renders initial state with heading and description', async () 
 
   expect(screen.getByRole('heading', { name: /GPX Draw Tool/i })).toBeTruthy();
   expect(
-    screen.getByText(/Draw markers and polylines on the map/i)
+    screen.getByText(/Draw markers and polylines on the map/i),
   ).toBeTruthy();
 
   cleanup();

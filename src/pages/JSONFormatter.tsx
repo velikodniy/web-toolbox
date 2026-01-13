@@ -3,11 +3,6 @@ import toast from 'react-hot-toast';
 import { useCopyToClipboard } from '../hooks/useCopyToClipboard.ts';
 import { useDebounce } from '../hooks/useDebounce.ts';
 
-interface ToastMethods {
-  success: (message: string) => string;
-  error: (message: string) => string;
-}
-
 const JSONFormatter: React.FC = () => {
   const [input, setInput] = useState<string>('');
   const [output, setOutput] = useState<string>('');
@@ -64,9 +59,9 @@ const JSONFormatter: React.FC = () => {
     if (!output) return;
     const success = await copy(output);
     if (success) {
-      (toast as unknown as ToastMethods).success('Copied!');
+      toast.success('Copied!');
     } else {
-      (toast as unknown as ToastMethods).error('Failed to copy');
+      toast.error('Failed to copy');
     }
   };
 

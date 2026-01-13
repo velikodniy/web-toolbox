@@ -8,7 +8,6 @@ import {
 } from 'npm:@testing-library/react@16.3.1';
 import { expect } from 'npm:expect@30.2.0';
 import Base64Tool from './Base64Tool.tsx';
-import React from 'npm:react';
 
 const test = Deno.test;
 

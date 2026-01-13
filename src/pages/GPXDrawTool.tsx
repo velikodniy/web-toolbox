@@ -4,9 +4,8 @@ import { toast } from 'react-hot-toast';
 import { FiDownload, FiMap, FiTrash2 } from 'react-icons/fi';
 import L from 'leaflet';
 import 'leaflet-draw';
-import { buildGPX, BaseBuilder } from 'gpx-builder';
+import { BaseBuilder, buildGPX } from 'gpx-builder';
 import '../lib/leaflet-setup.ts';
-import './gpx-tool.css';
 
 const { Point, Segment, Track } = BaseBuilder.MODELS;
 
@@ -88,7 +87,9 @@ const GPXDrawTool: React.FC = () => {
       const latlng = marker.getLatLng();
       markerCount.current += 1;
       const name = `Waypoint ${markerCount.current}`;
-      setWaypoints((prev) => [...prev, { lat: latlng.lat, lng: latlng.lng, name }]);
+      setWaypoints((
+        prev,
+      ) => [...prev, { lat: latlng.lat, lng: latlng.lng, name }]);
       marker.bindPopup(name).openPopup();
     } else if (e.layerType === 'polyline') {
       const polyline = layer as L.Polyline;
@@ -124,7 +125,9 @@ const GPXDrawTool: React.FC = () => {
     setTracks((prev) =>
       prev.filter((tr) => {
         if (tr.points.length === 0) return true;
-        return !deletedPolylinePoints.includes(`${tr.points[0].lat},${tr.points[0].lng}`);
+        return !deletedPolylinePoints.includes(
+          `${tr.points[0].lat},${tr.points[0].lng}`,
+        );
       })
     );
   }, []);
@@ -144,13 +147,13 @@ const GPXDrawTool: React.FC = () => {
     const gpxBuilder = new BaseBuilder();
 
     const gpxWaypoints = waypoints.map(
-      (wp) => new Point(wp.lat, wp.lng, { name: wp.name })
+      (wp) => new Point(wp.lat, wp.lng, { name: wp.name }),
     );
     gpxBuilder.setWayPoints(gpxWaypoints);
 
     const gpxTracks = tracks.map((track) => {
       const segment = new Segment(
-        track.points.map((pt) => new Point(pt.lat, pt.lng))
+        track.points.map((pt) => new Point(pt.lat, pt.lng)),
       );
       return new Track([segment], { name: track.name });
     });
@@ -178,9 +181,14 @@ const GPXDrawTool: React.FC = () => {
         Draw markers and polylines on the map, then export as a GPX file.
       </p>
 
-      <div className='tool-controls gpx-controls' style={{ marginBottom: '1rem' }}>
+      <div
+        className='tool-controls gpx-controls'
+        style={{ marginBottom: '1rem' }}
+      >
         <div className='tool-control-group'>
-          <FiMap style={{ marginRight: '0.5rem', color: 'var(--text-muted)' }} />
+          <FiMap
+            style={{ marginRight: '0.5rem', color: 'var(--text-muted)' }}
+          />
           <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
             {waypoints.length} waypoint{waypoints.length !== 1 ? 's' : ''},{' '}
             {tracks.length} track{tracks.length !== 1 ? 's' : ''}
@@ -237,7 +245,11 @@ const GPXDrawTool: React.FC = () => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           />
-          <FeatureGroup ref={(ref) => { if (ref) setFeatureGroup(ref); }}>
+          <FeatureGroup
+            ref={(ref) => {
+              if (ref) setFeatureGroup(ref);
+            }}
+          >
             {featureGroup && (
               <DrawControl
                 featureGroup={featureGroup}

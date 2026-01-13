@@ -1,19 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDebounce } from '../hooks/useDebounce.ts';
+import { useCopyToClipboard } from '../hooks/useCopyToClipboard.ts';
 import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
 import { toast } from 'react-hot-toast';
 import { FiCopy, FiExternalLink, FiShare2 } from 'react-icons/fi';
-import L from 'leaflet';
-
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-  iconUrl:
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-  shadowUrl:
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-});
+import '../lib/leaflet-setup.ts';
 
 interface PostcodeData {
   postcode: string;
@@ -43,10 +34,12 @@ const PostcodeLookup: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<PostcodeData | null>(null);
+  const [, copy] = useCopyToClipboard();
   const debouncedInput = useDebounce(input, 500);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const search = globalThis.location?.search ?? '';
+    const params = new URLSearchParams(search);
     const initialPostcode = params.get('postcode');
     if (initialPostcode) {
       setInput(initialPostcode.trim());
@@ -96,20 +89,27 @@ const PostcodeLookup: React.FC = () => {
     }
   }, [debouncedInput]);
 
-  const copyToClipboard = (text: string, label: string) => {
-    navigator.clipboard.writeText(text);
-    toast.success(`${label} copied!`);
+  const copyToClipboard = async (text: string, label: string) => {
+    const success = await copy(text);
+    if (success) {
+      toast.success(`${label} copied!`);
+    } else {
+      toast.error('Failed to copy');
+    }
   };
 
-  const shareLink = () => {
+  const shareLink = async () => {
     const trimmed = input.trim();
     if (!trimmed) return;
-    const url =
-      `${window.location.origin}${window.location.pathname}?postcode=${
-        encodeURIComponent(trimmed)
-      }`;
-    navigator.clipboard.writeText(url);
-    toast.success('Link copied!');
+    const origin = globalThis.location?.origin ?? '';
+    const pathname = globalThis.location?.pathname ?? '';
+    const url = `${origin}${pathname}?postcode=${encodeURIComponent(trimmed)}`;
+    const success = await copy(url);
+    if (success) {
+      toast.success('Link copied!');
+    } else {
+      toast.error('Failed to copy');
+    }
   };
 
   return (

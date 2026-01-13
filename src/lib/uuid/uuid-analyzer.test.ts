@@ -121,7 +121,9 @@ test('analyzeUuid extracts exact timestamp from known v1 UUID', () => {
   if (!result.success) return;
   expect(result.data.version).toBe(1);
   if (result.data.version !== 1) return;
-  expect(result.data.timestampDate.toISOString()).toBe('1998-02-04T22:13:53.151Z');
+  expect(result.data.timestampDate.toISOString()).toBe(
+    '1998-02-04T22:13:53.151Z',
+  );
 });
 
 test('analyzeUuid v4 UUID has no timestamp property', () => {

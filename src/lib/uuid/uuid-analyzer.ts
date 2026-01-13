@@ -1,8 +1,7 @@
 import { parse, validate, version as getVersion } from 'uuid';
+import { type Result } from '../result.ts';
 
-export type Result<T, E = string> =
-  | { success: true; data: T }
-  | { success: false; error: E };
+export type { Result };
 
 export type UuidPart = {
   name: string;
@@ -151,12 +150,12 @@ const getVariant = (bytes: Uint8Array): UuidVariant => {
 
 const extractV1TimestampMs = (bytes: Uint8Array): number => {
   const timeLow =
-    (((bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3]) >>> 0);
+    ((bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3]) >>> 0;
   const timeMid = (bytes[4] << 8) | bytes[5];
   const timeHi = ((bytes[6] & 0x0f) << 8) | bytes[7];
 
-  const timestamp100Ns =
-    BigInt(timeLow) | (BigInt(timeMid) << 32n) | (BigInt(timeHi) << 48n);
+  const timestamp100Ns = BigInt(timeLow) | (BigInt(timeMid) << 32n) |
+    (BigInt(timeHi) << 48n);
 
   const GREGORIAN_OFFSET_100NS = 122192928000000000n;
   const NS_PER_MS = 10000n;
@@ -165,12 +164,12 @@ const extractV1TimestampMs = (bytes: Uint8Array): number => {
 
 const extractV6TimestampMs = (bytes: Uint8Array): number => {
   const timeHigh =
-    (((bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3]) >>> 0);
+    ((bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3]) >>> 0;
   const timeMid = (bytes[4] << 8) | bytes[5];
   const timeLow = ((bytes[6] & 0x0f) << 8) | bytes[7];
 
-  const timestamp100Ns =
-    (BigInt(timeHigh) << 28n) | (BigInt(timeMid) << 12n) | BigInt(timeLow);
+  const timestamp100Ns = (BigInt(timeHigh) << 28n) | (BigInt(timeMid) << 12n) |
+    BigInt(timeLow);
 
   const GREGORIAN_OFFSET_100NS = 122192928000000000n;
   const NS_PER_MS = 10000n;
@@ -497,7 +496,10 @@ export const analyzeUuid = (input: string): Result<UuidAnalysis> => {
     default: {
       return {
         success: true,
-        data: { ...base, version: version as 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 },
+        data: {
+          ...base,
+          version: version as 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15,
+        },
       };
     }
   }

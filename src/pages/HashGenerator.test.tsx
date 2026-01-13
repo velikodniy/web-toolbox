@@ -8,21 +8,21 @@ import {
 } from 'npm:@testing-library/react@16.3.1';
 import { expect } from 'npm:expect@30.2.0';
 import HashGenerator from './HashGenerator.tsx';
-import React from 'npm:react';
 
 const test = Deno.test;
 
-globalThis.TextEncoder = class {
-  encode(input: string) {
+class MockTextEncoder {
+  encode(input: string): Uint8Array {
     return new Uint8Array([...input].map((c) => c.charCodeAt(0)));
   }
-} as any;
+}
+globalThis.TextEncoder = MockTextEncoder as typeof TextEncoder;
 
 Object.defineProperty(globalThis, 'crypto', {
   value: {
     subtle: {
-      digest: async (_algo: string, _data: Uint8Array) => {
-        return new Uint8Array([1, 2, 3]).buffer;
+      digest: (_algo: string, _data: Uint8Array) => {
+        return Promise.resolve(new Uint8Array([1, 2, 3]).buffer);
       },
     },
   },

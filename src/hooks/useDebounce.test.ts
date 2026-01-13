@@ -1,9 +1,9 @@
 import 'data:text/javascript,import "npm:global-jsdom@24.0.0/register";';
-import { renderHook } from 'npm:@testing-library/react@16.0.0';
+import { renderHook } from 'npm:@testing-library/react@16.3.1';
 import { expect } from 'npm:expect@30.2.0';
 import { useDebounce } from './useDebounce.ts';
 
-Deno.test('useDebounce should return initial value', async () => {
+Deno.test('useDebounce should return initial value', () => {
   const { result, unmount } = renderHook(() => useDebounce('test', 500));
   expect(result.current).toBe('test');
   unmount();
