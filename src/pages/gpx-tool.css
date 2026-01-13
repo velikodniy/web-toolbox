@@ -1,5 +1,10 @@
 /* GPX Draw Tool - Page-scoped responsive styles */
 
+/* Leaflet Draw toolbar text - ensure readable on light map background */
+.leaflet-draw-actions a {
+  color: #1a1a1a;
+}
+
 /* Stack controls on mobile */
 @media (max-width: 480px) {
   .gpx-controls {
