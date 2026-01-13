@@ -10,6 +10,7 @@ import JSONFormatter from './pages/JSONFormatter.tsx';
 import URLEncoder from './pages/URLEncoder.tsx';
 import HashGenerator from './pages/HashGenerator.tsx';
 import PostcodeLookup from './pages/PostcodeLookup.tsx';
+import GPXDrawTool from './pages/GPXDrawTool.tsx';
 
 function getInitialTheme(): 'light' | 'dark' {
   if (typeof document !== 'undefined') {
@@ -97,6 +98,7 @@ function App() {
               <Route path='/url-encoder' element={<URLEncoder />} />
               <Route path='/hash-generator' element={<HashGenerator />} />
               <Route path='/postcode-lookup' element={<PostcodeLookup />} />
+              <Route path='/gpx-draw' element={<GPXDrawTool />} />
             </Routes>
           </div>
         </main>

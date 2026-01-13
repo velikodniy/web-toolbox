@@ -5,6 +5,7 @@ import {
   FiCode,
   FiKey,
   FiLink,
+  FiMap,
   FiMapPin,
   FiShield,
 } from 'react-icons/fi';
@@ -46,6 +47,12 @@ const Home: React.FC = () => {
       description: 'Lookup UK postcodes, coordinates and administrative data',
       path: '/postcode-lookup',
       icon: <FiMapPin />,
+    },
+    {
+      name: 'GPX Draw Tool',
+      description: 'Draw markers and polylines on a map and export as GPX',
+      path: '/gpx-draw',
+      icon: <FiMap />,
     },
   ];
 
