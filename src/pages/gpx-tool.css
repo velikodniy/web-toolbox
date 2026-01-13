@@ -1,0 +1,43 @@
+/* GPX Draw Tool - Page-scoped responsive styles */
+
+/* Stack controls on mobile */
+@media (max-width: 480px) {
+  .gpx-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .gpx-controls .tool-control-group {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .gpx-controls .tool-control-group:last-child {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .gpx-controls .btn {
+    flex: 1;
+    min-height: 44px; /* Touch target */
+  }
+}
+
+/* Responsive map height */
+.gpx-map-wrapper {
+  height: clamp(300px, 60vh, 500px);
+}
+
+@media (max-width: 480px) {
+  .gpx-map-wrapper {
+    height: calc(100vh - 280px);
+    min-height: 300px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .gpx-map-wrapper {
+    height: calc(100vh - 200px);
+    min-height: 250px;
+  }
+}

@@ -5,16 +5,8 @@ import { FiDownload, FiMap, FiTrash2 } from 'react-icons/fi';
 import L from 'leaflet';
 import 'leaflet-draw';
 import { buildGPX, BaseBuilder } from 'gpx-builder';
-
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-  iconUrl:
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-  shadowUrl:
-    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-});
+import '../lib/leaflet-setup.ts';
+import './gpx-tool.css';
 
 const { Point, Segment, Track } = BaseBuilder.MODELS;
 
@@ -48,7 +40,7 @@ function DrawControl({ featureGroup, onCreated, onDeleted }: DrawControlProps) {
             className: 'leaflet-div-icon leaflet-editing-icon',
           }),
         },
-        marker: true,
+        marker: {},
       },
       edit: {
         featureGroup: featureGroup,
@@ -186,7 +178,7 @@ const GPXDrawTool: React.FC = () => {
         Draw markers and polylines on the map, then export as a GPX file.
       </p>
 
-      <div className='tool-controls' style={{ marginBottom: '1rem' }}>
+      <div className='tool-controls gpx-controls' style={{ marginBottom: '1rem' }}>
         <div className='tool-control-group'>
           <FiMap style={{ marginRight: '0.5rem', color: 'var(--text-muted)' }} />
           <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
@@ -227,9 +219,8 @@ const GPXDrawTool: React.FC = () => {
       </div>
 
       <div
-        className='map-wrapper'
+        className='map-wrapper gpx-map-wrapper'
         style={{
-          height: '500px',
           borderRadius: '12px',
           overflow: 'hidden',
           border: '1px solid var(--border-color)',
