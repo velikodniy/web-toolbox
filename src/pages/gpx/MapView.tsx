@@ -1,4 +1,4 @@
-import { Fragment, type MutableRefObject } from 'react';
+import { Fragment, useEffect, useMemo, type MutableRefObject } from 'react';
 import {
   CircleMarker,
   MapContainer,
@@ -52,6 +52,7 @@ type MapViewProps = {
   mapRef: MutableRefObject<L.Map | null>;
   onAddMarker: (position: LatLng) => void;
   onAddTrackPoint: (position: LatLng) => void;
+  onFinishTrack: () => void;
 };
 
 export function MapView({
@@ -64,9 +65,44 @@ export function MapView({
   mapRef,
   onAddMarker,
   onAddTrackPoint,
+  onFinishTrack,
 }: MapViewProps) {
+  const showFinish = mode === 'track';
+  const canFinish =
+    !!inProgressTrack && inProgressTrack.points.length >= 2;
+  const mapInstance = useMemo(() => mapRef.current, [mapRef.current]);
+
+  useEffect(() => {
+    if (!mapInstance) return;
+
+    const resize = () => {
+      const map = mapRef.current;
+      const container = map?.getContainer?.();
+      if (!map || !container) return;
+      map.invalidateSize({ animate: false });
+    };
+
+    mapInstance.whenReady(resize);
+    window.addEventListener('resize', resize);
+    return () => {
+      window.removeEventListener('resize', resize);
+    };
+  }, [mapInstance, mapRef]);
+
   return (
-    <div className='map-wrapper gpx-map-wrapper'>
+    <div className={`map-wrapper gpx-map-wrapper ${mode}-mode`}>
+      {showFinish && (
+        <div className='gpx-map-finish'>
+          <button
+            type='button'
+            className='btn btn-secondary btn-sm'
+            onClick={onFinishTrack}
+            disabled={!canFinish}
+          >
+            Finish track
+          </button>
+        </div>
+      )}
       <MapContainer
         center={[51.505, -0.09]}
         zoom={13}
@@ -89,20 +125,38 @@ export function MapView({
           onAddTrackPoint={onAddTrackPoint}
         />
 
-        {tracks.map((track) => (
-          <Polyline
-            key={track.id}
-            positions={track.points.map((pt) => [pt.lat, pt.lng])}
-            pathOptions={{
-              color: track.id === highlightedTrackId ? '#ef4444' : '#2563eb',
-              weight: track.id === highlightedTrackId ? 6 : 4,
-            }}
-          >
-            <Popup>
-              {track.name} ({track.points.length} pts)
-            </Popup>
-          </Polyline>
-        ))}
+        {tracks.map((track) => {
+          const isHighlighted = track.id === highlightedTrackId;
+          const color = isHighlighted ? '#ef4444' : '#2563eb';
+          return (
+            <Fragment key={track.id}>
+              <Polyline
+                positions={track.points.map((pt) => [pt.lat, pt.lng])}
+                pathOptions={{
+                  color,
+                  weight: isHighlighted ? 6 : 4,
+                }}
+              >
+                <Popup>
+                  {track.name} ({track.points.length} pts)
+                </Popup>
+              </Polyline>
+              {track.points.map((pt, idx) => (
+                <CircleMarker
+                  key={`${track.id}-vertex-${idx}`}
+                  center={[pt.lat, pt.lng]}
+                  radius={4}
+                  pathOptions={{
+                    color,
+                    weight: 2,
+                    fillColor: color,
+                    fillOpacity: 0.9,
+                  }}
+                />
+              ))}
+            </Fragment>
+          );
+        })}
 
         {inProgressTrack && (
           <Polyline
@@ -114,6 +168,20 @@ export function MapView({
             }}
           />
         )}
+        {inProgressTrack &&
+          inProgressTrack.points.map((pt, idx) => (
+            <CircleMarker
+              key={`inprogress-vertex-${idx}`}
+              center={[pt.lat, pt.lng]}
+              radius={4}
+              pathOptions={{
+                color: '#e11d48',
+                weight: 2,
+                fillColor: '#e11d48',
+                fillOpacity: 0.9,
+              }}
+            />
+          ))}
 
         {markers.map((marker) => (
           <Fragment key={marker.id}>

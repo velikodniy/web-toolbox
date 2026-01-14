@@ -1,6 +1,11 @@
 /// <reference lib="deno.ns" />
 import 'data:text/javascript,import "npm:global-jsdom@24.0.0/register";';
-import { cleanup, render, screen } from 'npm:@testing-library/react@16.3.1';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+} from 'npm:@testing-library/react@16.3.1';
 import { expect } from 'npm:expect@30.2.0';
 
 const test = Deno.test;
@@ -53,18 +58,39 @@ test('GPXDrawTool renders initial state with heading and description', async () 
 
   expect(screen.getByRole('heading', { name: /GPX Draw Tool/i })).toBeTruthy();
   expect(
-    screen.getByText(/Switch between pan, markers, and tracks/i),
+    screen.getByText(/Draw GPX markers and tracks/i),
   ).toBeTruthy();
 
   cleanup();
 });
 
-test('GPXDrawTool shows zero waypoints and tracks initially', async () => {
+test('GPXDrawTool shows the unified list heading initially', async () => {
   await setupLeafletMocks();
   const { default: GPXDrawTool } = await import('./GPXDrawTool.tsx');
   render(<GPXDrawTool />);
 
-  expect(screen.getByText(/0 waypoints, 0 tracks/i)).toBeTruthy();
+  expect(screen.getByText(/Markers & tracks/i)).toBeTruthy();
+  expect(screen.getByText(/No items yet/i)).toBeTruthy();
+  expect(screen.queryByText(/waypoints/i)).toBeNull();
+
+  cleanup();
+});
+
+test('shows finish track button in track mode and keeps it disabled without points', async () => {
+  await setupLeafletMocks();
+  const { default: GPXDrawTool } = await import('./GPXDrawTool.tsx');
+  render(<GPXDrawTool />);
+
+  expect(
+    screen.queryByRole('button', { name: /finish track/i }),
+  ).toBeNull();
+
+  const trackButton = screen.getByRole('button', { name: /track/i });
+  fireEvent.click(trackButton);
+
+  const finishButton = screen.getByRole('button', { name: /finish track/i });
+  expect(finishButton).toBeTruthy();
+  expect(finishButton.hasAttribute('disabled')).toBe(true);
 
   cleanup();
 });

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { FiDownload, FiMap, FiTrash2 } from 'react-icons/fi';
+import { FiDownload, FiTrash2 } from 'react-icons/fi';
 import {
   addMarker,
   addTrackPoint,
@@ -36,7 +36,18 @@ const GPXDrawTool: React.FC = () => {
     (state.inProgressTrack?.points.length ?? 0) >= 2;
 
   const changeMode = useCallback((mode: typeof state.mode) => {
-    setState((prev) => setMode(prev, mode));
+    setState((prev) => {
+      const leavingTrack = prev.mode === 'track' && mode !== 'track';
+      const hadCompletableTrack = leavingTrack &&
+        !!prev.inProgressTrack &&
+        prev.inProgressTrack.points.length >= 2;
+      const next = setMode(prev, mode);
+      const trackAdded = next.tracks.length > prev.tracks.length;
+      if (leavingTrack && hadCompletableTrack && trackAdded) {
+        toast.success('Track finished');
+      }
+      return next;
+    });
   }, []);
 
   const handleAddMarker = useCallback(
@@ -64,6 +75,25 @@ const GPXDrawTool: React.FC = () => {
     setHighlightedMarkerId(null);
     focusTrack(track);
   }, [focusTrack]);
+
+  const handleFinishTrack = useCallback(() => {
+    setState((prev) => {
+      if (!prev.inProgressTrack) {
+        toast.error('Add points to finish a track');
+        return prev;
+      }
+      if (prev.inProgressTrack.points.length < 2) {
+        toast.error('Add at least two points to finish a track');
+        return prev;
+      }
+      const next = finalizeTrack(prev);
+      const trackAdded = next.tracks.length > prev.tracks.length;
+      if (trackAdded) {
+        toast.success('Track finished');
+      }
+      return next;
+    });
+  }, []);
 
   const handleClear = useCallback(() => {
     setState(createInitialState());
@@ -113,23 +143,11 @@ const GPXDrawTool: React.FC = () => {
     <div className='tool-page'>
       <h1>GPX Draw Tool</h1>
       <p className='description'>
-        Switch between pan, markers, and tracks; auto-finish tracks when you
-        leave the track tool, manage items in the sidebar, and export as GPX.
+        Draw GPX markers and tracks on the map, then export as GPX.
       </p>
 
       <div className='tool-controls gpx-controls'>
         <ModeSwitch mode={state.mode} onChange={changeMode} />
-
-        <div className='tool-control-group gpx-stats'>
-          <FiMap
-            style={{ marginRight: '0.5rem', color: 'var(--text-muted)' }}
-          />
-          <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-            {state.markers.length}{' '}
-            waypoint{state.markers.length === 1 ? '' : 's'},{' '}
-            {state.tracks.length} track{state.tracks.length === 1 ? '' : 's'}
-          </span>
-        </div>
 
         <div className='tool-control-group gpx-actions'>
           <button
@@ -164,6 +182,7 @@ const GPXDrawTool: React.FC = () => {
           mapRef={mapRef}
           onAddMarker={handleAddMarker}
           onAddTrackPoint={handleAddTrackPoint}
+          onFinishTrack={handleFinishTrack}
         />
 
         <GPXSidebar
