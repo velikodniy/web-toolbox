@@ -239,6 +239,7 @@ const GPXDrawTool: React.FC = () => {
         <MapContainer
           center={[51.505, -0.09]}
           zoom={13}
+          tap={false}
           style={{ height: '100%', width: '100%' }}
         >
           <TileLayer
