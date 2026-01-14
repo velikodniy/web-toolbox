@@ -185,9 +185,9 @@ export function MapView({
 
         {markers.map((marker) => (
           <Fragment key={marker.id}>
-            <Marker position={[marker.position.lat, marker.position.lng]}>
-              <Popup>{marker.name}</Popup>
-            </Marker>
+            <Marker
+              position={[marker.position.lat, marker.position.lng]}
+            />
             {highlightedMarkerId === marker.id && (
               <CircleMarker
                 center={[marker.position.lat, marker.position.lng]}
