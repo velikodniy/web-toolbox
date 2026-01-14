@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, type MutableRefObject } from 'react';
 import {
   CircleMarker,
   MapContainer,
@@ -49,7 +49,7 @@ type MapViewProps = {
   inProgressTrack: { id: string; points: LatLng[] } | null;
   highlightedMarkerId: string | null;
   highlightedTrackId: string | null;
-  mapRef: React.MutableRefObject<L.Map | null>;
+  mapRef: MutableRefObject<L.Map | null>;
   onAddMarker: (position: LatLng) => void;
   onAddTrackPoint: (position: LatLng) => void;
 };
