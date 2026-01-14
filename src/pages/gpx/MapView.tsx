@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import {
   CircleMarker,
   MapContainer,
@@ -115,7 +116,7 @@ export function MapView({
         )}
 
         {markers.map((marker) => (
-          <React.Fragment key={marker.id}>
+          <Fragment key={marker.id}>
             <Marker position={[marker.position.lat, marker.position.lng]}>
               <Popup>{marker.name}</Popup>
             </Marker>
@@ -126,7 +127,7 @@ export function MapView({
                 radius={12}
               />
             )}
-          </React.Fragment>
+          </Fragment>
         ))}
       </MapContainer>
     </div>
