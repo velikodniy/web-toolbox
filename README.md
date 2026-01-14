@@ -38,6 +38,12 @@ Lint code:
 deno task check
 ```
 
+Run tests:
+
+```bash
+deno task test
+```
+
 ## Build
 
 Build the app for production:
