@@ -1,42 +1,187 @@
 /* GPX Draw Tool - Page-scoped responsive styles */
 
-/* Leaflet Draw toolbar text - ensure readable on light map background */
-.leaflet-draw-actions a {
-  color: #1a1a1a;
+.gpx-controls {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.gpx-mode-switch {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.gpx-mode-switch .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.gpx-mode-switch .btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.gpx-stats {
+  justify-content: center;
+}
+
+.gpx-actions {
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
+.gpx-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.gpx-map-wrapper {
+  height: clamp(320px, 62vh, 560px);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  position: relative;
+  z-index: 0;
+}
+
+.gpx-map.pan-mode {
+  cursor: grab;
+}
+
+.gpx-map.marker-mode,
+.gpx-map.track-mode {
+  cursor: crosshair;
+}
+
+.gpx-sidebar {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem;
+  background: var(--panel-bg, #fff);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gpx-sidebar-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-strong, #111);
+}
+
+.gpx-list {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0.75rem;
+  background: var(--bg-muted, #fafafa);
+}
+
+.gpx-list-title {
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.gpx-list-empty,
+.gpx-list-note {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.gpx-list-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.45rem 0.35rem;
+  border-radius: 8px;
+}
+
+.gpx-list-item + .gpx-list-item {
+  border-top: 1px solid var(--border-color);
+}
+
+.gpx-list-item.is-active {
+  background: rgba(59, 130, 246, 0.08);
+}
+
+.gpx-name-input {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.4rem 0.55rem;
+  font-size: 0.95rem;
+}
+
+.gpx-item-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.gpx-coords {
+  white-space: nowrap;
+}
+
+.gpx-delete,
+.gpx-focus {
+  border: 1px solid var(--border-color);
+  background: #fff;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.45rem;
+  cursor: pointer;
+}
+
+.gpx-delete:hover,
+.gpx-focus:hover {
+  border-color: var(--accent);
+}
+
+@media (max-width: 960px) {
+  .gpx-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .gpx-sidebar {
+    order: -1;
+  }
 }
 
 /* Stack controls on mobile */
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .gpx-controls {
-    flex-direction: column;
-    gap: 0.75rem;
+    grid-template-columns: 1fr;
   }
 
-  .gpx-controls .tool-control-group {
+  .gpx-actions,
+  .gpx-mode-switch,
+  .gpx-stats {
+    justify-content: flex-start;
+  }
+
+  .gpx-actions .btn {
     width: 100%;
-    justify-content: center;
   }
 
-  .gpx-controls .tool-control-group:last-child {
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  .gpx-controls .btn {
-    flex: 1;
-    min-height: 44px; /* Touch target */
-  }
-}
-
-/* Responsive map height */
-.gpx-map-wrapper {
-  height: clamp(300px, 60vh, 500px);
-}
-
-@media (max-width: 480px) {
   .gpx-map-wrapper {
-    height: calc(100vh - 280px);
-    min-height: 300px;
+    height: calc(100vh - 260px);
+    min-height: 320px;
   }
 }
 
