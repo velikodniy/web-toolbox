@@ -1,3 +1,4 @@
+/// <reference lib="deno.ns" />
 import 'data:text/javascript,import "npm:global-jsdom@24.0.0/register";';
 import { cleanup, render, screen } from 'npm:@testing-library/react@16.3.1';
 import { expect } from 'npm:expect@30.2.0';
@@ -43,27 +44,6 @@ Object.assign(URL, {
 async function setupLeafletMocks() {
   const L = (await import('leaflet')).default;
   (globalThis as unknown as { L: typeof L }).L = L;
-
-  // Mock L.Control.Draw with proper onAdd implementation
-  class MockDraw extends L.Control {
-    constructor(_options?: unknown) {
-      super();
-    }
-    onAdd(_map: L.Map) {
-      return document.createElement('div');
-    }
-    onRemove(_map: L.Map) {
-      // no-op
-    }
-  }
-
-  L.Control.Draw = MockDraw as unknown as typeof L.Control.Draw;
-  L.Draw = {
-    Event: {
-      CREATED: 'draw:created',
-      DELETED: 'draw:deleted',
-    },
-  } as unknown as typeof L.Draw;
 }
 
 test('GPXDrawTool renders initial state with heading and description', async () => {
@@ -73,7 +53,7 @@ test('GPXDrawTool renders initial state with heading and description', async () 
 
   expect(screen.getByRole('heading', { name: /GPX Draw Tool/i })).toBeTruthy();
   expect(
-    screen.getByText(/Draw markers and polylines on the map/i),
+    screen.getByText(/Switch between pan, markers, and tracks/i),
   ).toBeTruthy();
 
   cleanup();
