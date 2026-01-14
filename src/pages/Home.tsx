@@ -61,8 +61,7 @@ const Home: React.FC = () => {
       <section className='hero'>
         <h1>Toolbox</h1>
         <p>
-          A collection of essential tools for software engineers and developers.
-          Simple, fast, and completely client-side.
+          A collection of essential tools. Simple, fast, and completely client-side.
         </p>
       </section>
 
