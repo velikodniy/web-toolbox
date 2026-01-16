@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { useDebounce } from '../hooks/useDebounce.ts';
-import { useCopyToClipboard } from '../hooks/useCopyToClipboard.ts';
+import toast from 'react-hot-toast';
 import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
-import { toast } from 'react-hot-toast';
-import { FiCopy, FiExternalLink, FiShare2 } from 'react-icons/fi';
+import { FiExternalLink, FiShare2 } from 'react-icons/fi';
+import {
+  CopyButton,
+  ErrorMessage,
+  SplitView,
+  ToolPageLayout,
+} from '../components/ui/index.ts';
+import { useCopyToClipboard } from '../hooks/useCopyToClipboard.ts';
+import { useDebounce } from '../hooks/useDebounce.ts';
 import '../lib/leaflet-setup.ts';
 
-interface PostcodeData {
+type PostcodeData = {
   postcode: string;
   latitude: number;
   longitude: number;
   admin_district: string;
   region: string;
   country: string;
-}
+};
 
-interface PostcodeResponse {
+type PostcodeResponse = {
   status: number;
   result: PostcodeData;
   error?: string;
-}
+};
 
 function MapUpdater({ center }: { center: [number, number] }) {
   const map = useMap();
@@ -28,6 +34,29 @@ function MapUpdater({ center }: { center: [number, number] }) {
   }, [center, map]);
   return null;
 }
+
+type DetailRowProps = {
+  label: string;
+  value: string;
+  copyValue?: string;
+};
+
+const DetailRow = ({ label, value, copyValue }: DetailRowProps) => (
+  <div className='flex-between mb-half'>
+    <span style={{ color: 'var(--text-muted)' }}>{label}:</span>
+    <span className='flex-center' style={{ fontWeight: 500 }}>
+      {value}
+      {copyValue && (
+        <CopyButton
+          text={copyValue}
+          label='Copy'
+          successMessage={`${label} copied!`}
+          iconOnly
+        />
+      )}
+    </span>
+  </div>
+);
 
 const PostcodeLookup: React.FC = () => {
   const [input, setInput] = useState('');
@@ -73,7 +102,7 @@ const PostcodeLookup: React.FC = () => {
           setError(json.error || 'Postcode not found');
           setData(null);
         }
-      } catch (_err) {
+      } catch {
         setError('Failed to connect to lookup service');
         setData(null);
       } finally {
@@ -89,15 +118,6 @@ const PostcodeLookup: React.FC = () => {
     }
   }, [debouncedInput]);
 
-  const copyToClipboard = async (text: string, label: string) => {
-    const success = await copy(text);
-    if (success) {
-      toast.success(`${label} copied!`);
-    } else {
-      toast.error('Failed to copy');
-    }
-  };
-
   const shareLink = async () => {
     const trimmed = input.trim();
     if (!trimmed) return;
@@ -112,17 +132,70 @@ const PostcodeLookup: React.FC = () => {
     }
   };
 
-  return (
-    <div className='tool-page'>
-      <h1>Postcode Lookup</h1>
-      <p className='description'>
-        Find locations, administrative data, and coordinates for any UK
-        postcode.
-      </p>
+  const leftPane = data && (
+    <div className='result-output' style={{ marginBottom: '1.5rem' }}>
+      <DetailRow label='Postcode' value={data.postcode} />
+      <DetailRow label='Region' value={data.region || 'N/A'} />
+      <DetailRow label='District' value={data.admin_district || 'N/A'} />
+      <DetailRow label='Country' value={data.country} />
+      <DetailRow
+        label='Coordinates'
+        value={`${data.latitude.toFixed(5)}, ${data.longitude.toFixed(5)}`}
+        copyValue={`${data.latitude}, ${data.longitude}`}
+      />
+    </div>
+  );
 
+  const rightPane = data && (
+    <div
+      className='map-wrapper'
+      style={{
+        height: '400px',
+        borderRadius: '12px',
+        overflow: 'hidden',
+        border: '1px solid var(--border-color)',
+        position: 'relative',
+        zIndex: 0,
+      }}
+    >
+      <MapContainer
+        center={[data.latitude, data.longitude]}
+        zoom={15}
+        style={{ height: '100%', width: '100%' }}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        />
+        <Marker position={[data.latitude, data.longitude]}>
+          <Popup>
+            <strong>{data.postcode}</strong>
+            <br />
+            {data.admin_district}
+          </Popup>
+        </Marker>
+        <MapUpdater center={[data.latitude, data.longitude]} />
+      </MapContainer>
+      <a
+        href={`https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}`}
+        target='_blank'
+        rel='noopener noreferrer'
+        className='map-cta'
+        title='Open in Google Maps'
+      >
+        <FiExternalLink /> Google Maps
+      </a>
+    </div>
+  );
+
+  return (
+    <ToolPageLayout
+      title='Postcode Lookup'
+      description='Find locations, administrative data, and coordinates for any UK postcode.'
+    >
       <div className='form-group'>
         <label htmlFor='postcode-input'>Enter UK Postcode</label>
-        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+        <div className='flex-center'>
           <div style={{ position: 'relative', maxWidth: '200px' }}>
             <input
               id='postcode-input'
@@ -161,124 +234,15 @@ const PostcodeLookup: React.FC = () => {
         </div>
       </div>
 
-      {error && (
-        <div className='error-message'>
-          <span role='img' aria-label='error'>⚠️</span> {error}
-        </div>
-      )}
+      <ErrorMessage error={error} />
 
       {data && (
         <div className='result-section fade-in'>
-          <div className='split-view'>
-            <div>
-              <div className='result-output' style={{ marginBottom: '1.5rem' }}>
-                <DetailRow label='Postcode' value={data.postcode} />
-                <DetailRow label='Region' value={data.region || 'N/A'} />
-                <DetailRow
-                  label='District'
-                  value={data.admin_district || 'N/A'}
-                />
-                <DetailRow label='Country' value={data.country} />
-                <DetailRow
-                  label='Coordinates'
-                  value={`${data.latitude.toFixed(5)}, ${
-                    data.longitude.toFixed(5)
-                  }`}
-                  copyable
-                  onCopy={() =>
-                    copyToClipboard(
-                      `${data.latitude}, ${data.longitude}`,
-                      'Coordinates',
-                    )}
-                />
-              </div>
-            </div>
-
-            <div
-              className='map-wrapper'
-              style={{
-                height: '400px',
-                borderRadius: '12px',
-                overflow: 'hidden',
-                border: '1px solid var(--border-color)',
-                position: 'relative',
-                zIndex: 0,
-              }}
-            >
-              <MapContainer
-                center={[data.latitude, data.longitude]}
-                zoom={15}
-                style={{ height: '100%', width: '100%' }}
-              >
-                <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-                />
-                <Marker position={[data.latitude, data.longitude]}>
-                  <Popup>
-                    <strong>{data.postcode}</strong>
-                    <br />
-                    {data.admin_district}
-                  </Popup>
-                </Marker>
-                <MapUpdater center={[data.latitude, data.longitude]} />
-              </MapContainer>
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}`}
-                target='_blank'
-                rel='noopener noreferrer'
-                className='map-cta'
-                title='Open in Google Maps'
-              >
-                <FiExternalLink /> Google Maps
-              </a>
-            </div>
-          </div>
+          <SplitView left={leftPane} right={rightPane} />
         </div>
       )}
-    </div>
+    </ToolPageLayout>
   );
 };
-
-const DetailRow = (
-  { label, value, copyable, onCopy }: {
-    label: string;
-    value: string;
-    copyable?: boolean;
-    onCopy?: () => void;
-  },
-) => (
-  <div
-    style={{
-      display: 'flex',
-      justifyContent: 'space-between',
-      marginBottom: '0.5rem',
-      alignItems: 'center',
-    }}
-  >
-    <span style={{ color: 'var(--text-muted)' }}>{label}:</span>
-    <span
-      style={{
-        fontWeight: 500,
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.5rem',
-      }}
-    >
-      {value}
-      {copyable && (
-        <button
-          type='button'
-          onClick={onCopy}
-          className='theme-toggle'
-          style={{ width: '24px', height: '24px', fontSize: '0.8rem' }}
-          title='Copy'
-        >
-          <FiCopy />
-        </button>
-      )}
-    </span>
-  </div>
-);
 
 export default PostcodeLookup;
