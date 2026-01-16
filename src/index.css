@@ -635,3 +635,7 @@ body {
   color: var(--text-muted);
   font-size: 0.8rem;
 }
+
+.bg-subtle {
+  background-color: var(--bg-subtle);
+}

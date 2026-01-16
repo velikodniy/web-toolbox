@@ -101,11 +101,10 @@ const JSONFormatter: React.FC = () => {
       </div>
       <textarea
         id='output'
-        className='form-textarea flex-1 textarea-tall'
+        className='form-textarea flex-1 textarea-tall bg-subtle'
         value={output}
         readOnly
         placeholder='Formatted output will appear here...'
-        style={{ backgroundColor: 'var(--bg-subtle)' }}
       />
     </div>
   );
