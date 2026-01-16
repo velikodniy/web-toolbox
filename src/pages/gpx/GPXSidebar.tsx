@@ -1,4 +1,4 @@
-import { FiActivity, FiMapPin, FiTarget, FiTrash2 } from 'react-icons/fi';
+import { FiActivity, FiMapPin, FiTrash2 } from 'react-icons/fi';
 import type { MarkerItem, TrackItem } from '../gpx-draw-state.ts';
 
 type GPXSidebarProps = {
@@ -68,8 +68,7 @@ export function GPXSidebar({
                 onClick={() =>
                   isMarker
                     ? onFocusMarker(item.marker)
-                    : onFocusTrack(item.track)
-                }
+                    : onFocusTrack(item.track)}
                 title='Highlight on map'
               >
                 {isMarker ? <FiMapPin /> : <FiActivity />}
@@ -80,8 +79,7 @@ export function GPXSidebar({
                 onChange={(e) =>
                   isMarker
                     ? onRenameMarker(item.id, e.target.value)
-                    : onRenameTrack(item.id, e.target.value)
-                }
+                    : onRenameTrack(item.id, e.target.value)}
                 className='gpx-name-input'
               />
               <div className='gpx-item-actions'>
@@ -89,8 +87,7 @@ export function GPXSidebar({
                   type='button'
                   className='gpx-delete'
                   onClick={() =>
-                    isMarker ? onDeleteMarker(item.id) : onDeleteTrack(item.id)
-                  }
+                    isMarker ? onDeleteMarker(item.id) : onDeleteTrack(item.id)}
                   aria-label={`Delete ${item.name}`}
                 >
                   <FiTrash2 />

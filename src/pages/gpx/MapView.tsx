@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, type MutableRefObject } from 'react';
+import { Fragment, type MutableRefObject, useEffect, useMemo } from 'react';
 import {
   CircleMarker,
   MapContainer,
@@ -68,8 +68,7 @@ export function MapView({
   onFinishTrack,
 }: MapViewProps) {
   const showFinish = mode === 'track';
-  const canFinish =
-    !!inProgressTrack && inProgressTrack.points.length >= 2;
+  const canFinish = !!inProgressTrack && inProgressTrack.points.length >= 2;
   const mapInstance = useMemo(() => mapRef.current, [mapRef.current]);
 
   useEffect(() => {
@@ -83,9 +82,10 @@ export function MapView({
     };
 
     mapInstance.whenReady(resize);
-    window.addEventListener('resize', resize);
+    const resizeTarget = globalThis;
+    resizeTarget.addEventListener('resize', resize);
     return () => {
-      window.removeEventListener('resize', resize);
+      resizeTarget.removeEventListener('resize', resize);
     };
   }, [mapInstance, mapRef]);
 
