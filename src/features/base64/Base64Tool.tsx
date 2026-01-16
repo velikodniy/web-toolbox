@@ -2,7 +2,7 @@ import React from 'react';
 import {
   BidirectionalConverter,
   ToolPageLayout,
-} from '../components/ui/index.ts';
+} from '../../components/ui/index.ts';
 
 const encode = (input: string) => {
   try {

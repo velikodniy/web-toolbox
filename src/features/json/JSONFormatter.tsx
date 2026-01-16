@@ -3,8 +3,8 @@ import {
   CopyButton,
   SplitView,
   ToolPageLayout,
-} from '../components/ui/index.ts';
-import { useDebounce } from '../hooks/useDebounce.ts';
+} from '../../components/ui/index.ts';
+import { useDebounce } from '../../hooks/useDebounce.ts';
 
 const JSONFormatter: React.FC = () => {
   const [input, setInput] = useState<string>('');

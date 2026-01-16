@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { CopyButton, ToolPageLayout } from '../components/ui/index.ts';
-import { useDebounce } from '../hooks/useDebounce.ts';
+import { CopyButton, ToolPageLayout } from '../../components/ui/index.ts';
+import { useDebounce } from '../../hooks/useDebounce.ts';
 
 const HashGenerator: React.FC = () => {
   const [input, setInput] = useState<string>('');

@@ -7,10 +7,10 @@ import {
   ErrorMessage,
   SplitView,
   ToolPageLayout,
-} from '../components/ui/index.ts';
-import { useCopyToClipboard } from '../hooks/useCopyToClipboard.ts';
-import { useDebounce } from '../hooks/useDebounce.ts';
-import '../lib/leaflet-setup.ts';
+} from '../../components/ui/index.ts';
+import { useCopyToClipboard } from '../../hooks/useCopyToClipboard.ts';
+import { useDebounce } from '../../hooks/useDebounce.ts';
+import '../../lib/leaflet-setup.ts';
 
 type PostcodeData = {
   postcode: string;
