@@ -3,8 +3,8 @@ import toast from 'react-hot-toast';
 import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
 import { FiExternalLink, FiShare2 } from 'react-icons/fi';
 import {
-  CopyButton,
   ErrorMessage,
+  KeyValueRow,
   SplitView,
   ToolPageLayout,
 } from '../../components/ui/index.ts';
@@ -35,28 +35,6 @@ function MapUpdater({ center }: { center: [number, number] }) {
   return null;
 }
 
-type DetailRowProps = {
-  label: string;
-  value: string;
-  copyValue?: string;
-};
-
-const DetailRow = ({ label, value, copyValue }: DetailRowProps) => (
-  <div className='flex-between mb-half'>
-    <span className='text-muted'>{label}:</span>
-    <span className='flex-center font-medium'>
-      {value}
-      {copyValue && (
-        <CopyButton
-          text={copyValue}
-          label='Copy'
-          successMessage={`${label} copied!`}
-          iconOnly
-        />
-      )}
-    </span>
-  </div>
-);
 
 const PostcodeLookup: React.FC = () => {
   const [input, setInput] = useState('');
@@ -134,11 +112,11 @@ const PostcodeLookup: React.FC = () => {
 
   const leftPane = data && (
     <div className='result-output mb-md'>
-      <DetailRow label='Postcode' value={data.postcode} />
-      <DetailRow label='Region' value={data.region || 'N/A'} />
-      <DetailRow label='District' value={data.admin_district || 'N/A'} />
-      <DetailRow label='Country' value={data.country} />
-      <DetailRow
+      <KeyValueRow label='Postcode' value={data.postcode} />
+      <KeyValueRow label='Region' value={data.region || 'N/A'} />
+      <KeyValueRow label='District' value={data.admin_district || 'N/A'} />
+      <KeyValueRow label='Country' value={data.country} />
+      <KeyValueRow
         label='Coordinates'
         value={`${data.latitude.toFixed(5)}, ${data.longitude.toFixed(5)}`}
         copyValue={`${data.latitude}, ${data.longitude}`}
