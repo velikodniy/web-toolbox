@@ -9,7 +9,7 @@ import {
   useMapEvents,
 } from 'react-leaflet';
 import L from 'leaflet';
-import '../../lib/leaflet-setup.ts';
+import '../../../lib/leaflet-setup.ts';
 import type {
   DrawingMode,
   LatLng,

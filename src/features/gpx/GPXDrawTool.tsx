@@ -13,11 +13,11 @@ import {
   renameTrack,
   setMode,
 } from './gpx-draw-state.ts';
-import { useGPXExport } from '../hooks/useGPXExport.ts';
-import { useMapFocus } from '../hooks/useMapFocus.ts';
-import { ModeSwitch } from './gpx/ModeSwitch.tsx';
-import { MapView } from './gpx/MapView.tsx';
-import { GPXSidebar } from './gpx/GPXSidebar.tsx';
+import { useGPXExport } from './hooks/useGPXExport.ts';
+import { useMapFocus } from './hooks/useMapFocus.ts';
+import { ModeSwitch } from './components/ModeSwitch.tsx';
+import { MapView } from './components/MapView.tsx';
+import { GPXSidebar } from './components/GPXSidebar.tsx';
 
 const GPXDrawTool: React.FC = () => {
   const [state, setState] = useState<DrawingState>(createInitialState);

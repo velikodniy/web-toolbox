@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react';
 import L from 'leaflet';
-import type { MarkerItem, TrackItem } from '../pages/gpx-draw-state.ts';
+import type { MarkerItem, TrackItem } from '../gpx-draw-state.ts';
 
 export function useMapFocus() {
   const mapRef = useRef<L.Map | null>(null);

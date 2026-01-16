@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { toast } from 'react-hot-toast';
 import { BaseBuilder, buildGPX } from 'gpx-builder';
-import type { DrawingState } from '../pages/gpx-draw-state.ts';
+import type { DrawingState } from '../gpx-draw-state.ts';
 
 const { Point, Segment, Track } = BaseBuilder.MODELS;
 
