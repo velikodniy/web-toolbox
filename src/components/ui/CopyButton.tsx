@@ -1,7 +1,6 @@
 import toast from 'react-hot-toast';
 import { FiCopy } from 'react-icons/fi';
 import { useCopyToClipboard } from '../../hooks/useCopyToClipboard.ts';
-import styles from './CopyButton.module.css';
 
 type CopyButtonProps = {
   text: string;
@@ -31,10 +30,10 @@ export function CopyButton({
   };
 
   const buttonClass = iconOnly
-    ? styles.iconButton
+    ? 'icon-btn'
     : compact
-    ? `btn btn-secondary btn-compact`
-    : `btn btn-secondary`;
+    ? 'btn btn-secondary btn-compact'
+    : 'btn btn-secondary';
 
   return (
     <button

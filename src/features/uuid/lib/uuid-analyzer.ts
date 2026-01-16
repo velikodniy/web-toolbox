@@ -1,5 +1,5 @@
 import { parse, validate, version as getVersion } from 'uuid';
-import { type Result } from '../result.ts';
+import { type Result } from '../../../lib/result.ts';
 
 export type { Result };
 

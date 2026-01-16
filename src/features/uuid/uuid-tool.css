@@ -1,0 +1,265 @@
+/* UUID Tool Styles */
+.uuid-section {
+  margin-bottom: 2.5rem;
+}
+
+.uuid-section-divider {
+  border-top: 1px solid var(--border-color);
+  padding-top: 2rem;
+}
+
+.uuid-section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.uuid-button-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.uuid-result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.uuid-result-header h3 {
+  margin: 0;
+}
+
+.uuid-result-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* UUID Colored Display */
+.uuid-colored-display {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.uuid-colored-display .uuid-hyphen {
+  color: var(--text-faint);
+}
+
+.uuid-colored-output {
+  text-align: center;
+  padding: 1.5rem;
+}
+
+/* UUID Part Colors - Using CSS variables from globals */
+.uuid-part-time_low { color: var(--uuid-time-low); }
+.uuid-part-time_mid { color: var(--uuid-time-mid); }
+.uuid-part-time_hi_and_version { color: var(--uuid-time-hi-version); }
+.uuid-part-time_hi { color: var(--uuid-time-hi); }
+.uuid-part-clock_seq { color: var(--uuid-clock-seq); }
+.uuid-part-node { color: var(--uuid-node); }
+.uuid-part-random_a { color: var(--uuid-random-a); }
+.uuid-part-random_b { color: var(--uuid-random-b); }
+.uuid-part-random_c { color: var(--uuid-random-c); }
+.uuid-part-random_d { color: var(--uuid-random-d); }
+.uuid-part-version { color: var(--uuid-version); }
+.uuid-part-variant { color: var(--uuid-variant); }
+.uuid-part-unix_ts_ms { color: var(--uuid-unix-ts); }
+.uuid-part-rand_a { color: var(--uuid-rand-a); }
+.uuid-part-rand_b { color: var(--uuid-rand-b); }
+.uuid-part-data { color: var(--text-muted); }
+.uuid-part-hash_a { color: var(--uuid-hash-a); }
+.uuid-part-hash_b { color: var(--uuid-hash-b); }
+.uuid-part-hash_c { color: var(--uuid-hash-c); }
+.uuid-part-hash_d { color: var(--uuid-hash-d); }
+
+/* UUID Summary Grid */
+.uuid-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.uuid-summary-card {
+  background: var(--bg-subtle);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.uuid-summary-timestamps {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 480px) {
+  .uuid-summary-timestamps {
+    grid-template-columns: 1fr;
+  }
+}
+
+.uuid-summary-hash {
+  margin-top: 1rem;
+}
+
+.uuid-hash-value {
+  font-size: 0.85rem;
+  word-break: break-all;
+}
+
+.uuid-summary-card-wide {
+  grid-column: span 2;
+}
+
+@media (max-width: 480px) {
+  .uuid-summary-card-wide {
+    grid-column: span 1;
+  }
+}
+
+.uuid-summary-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.uuid-summary-value {
+  font-weight: 600;
+}
+
+.uuid-summary-value-lg {
+  font-size: 1.25rem;
+}
+
+.uuid-summary-value-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+}
+
+/* UUID Parts Table */
+.uuid-table-container {
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.uuid-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.uuid-table th {
+  text-align: left;
+  padding: 0.75rem 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.uuid-table td {
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+.uuid-table-cell-name {
+  font-weight: 500;
+}
+
+.uuid-table-cell-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.uuid-table-cell-faint {
+  color: var(--text-faint);
+}
+
+.uuid-decoded-value {
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+}
+
+/* UUID Part Color Dot - Using CSS variables */
+.uuid-color-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.uuid-part-time_low-bg { background-color: var(--uuid-time-low); }
+.uuid-part-time_mid-bg { background-color: var(--uuid-time-mid); }
+.uuid-part-time_hi_and_version-bg { background-color: var(--uuid-time-hi-version); }
+.uuid-part-time_hi-bg { background-color: var(--uuid-time-hi); }
+.uuid-part-clock_seq-bg { background-color: var(--uuid-clock-seq); }
+.uuid-part-node-bg { background-color: var(--uuid-node); }
+.uuid-part-random_a-bg { background-color: var(--uuid-random-a); }
+.uuid-part-random_b-bg { background-color: var(--uuid-random-b); }
+.uuid-part-random_c-bg { background-color: var(--uuid-random-c); }
+.uuid-part-random_d-bg { background-color: var(--uuid-random-d); }
+.uuid-part-version-bg { background-color: var(--uuid-version); }
+.uuid-part-variant-bg { background-color: var(--uuid-variant); }
+.uuid-part-unix_ts_ms-bg { background-color: var(--uuid-unix-ts); }
+.uuid-part-rand_a-bg { background-color: var(--uuid-rand-a); }
+.uuid-part-rand_b-bg { background-color: var(--uuid-rand-b); }
+.uuid-part-data-bg { background-color: var(--text-muted); }
+.uuid-part-hash_a-bg { background-color: var(--uuid-hash-a); }
+.uuid-part-hash_b-bg { background-color: var(--uuid-hash-b); }
+.uuid-part-hash_c-bg { background-color: var(--uuid-hash-c); }
+.uuid-part-hash_d-bg { background-color: var(--uuid-hash-d); }
+
+/* UUID Legend */
+.uuid-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+}
+
+.uuid-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--text-muted);
+}
+
+/* Subsection spacing */
+.uuid-subsection {
+  margin-bottom: 1.5rem;
+}
+
+.uuid-subsection-title {
+  margin-bottom: 0.75rem;
+}
+
+/* Namespace input row */
+.uuid-namespace-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.uuid-namespace-select {
+  max-width: 150px;
+}
+
+.uuid-namespace-input {
+  flex: 1;
+  min-width: 200px;
+}
+
+.uuid-version-select {
+  max-width: 300px;
+}

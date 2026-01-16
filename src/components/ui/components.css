@@ -1,4 +1,6 @@
-.iconButton {
+/* Shared UI Component Styles */
+
+.icon-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,21 +14,21 @@
   transition: all 0.15s ease;
 }
 
-.iconButton:hover:not(:disabled) {
+.icon-btn:hover:not(:disabled) {
   background: var(--bg-card);
   color: var(--brand-primary);
 }
 
-.iconButton:active:not(:disabled) {
+.icon-btn:active:not(:disabled) {
   transform: scale(0.95);
 }
 
-.iconButton:disabled {
+.icon-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
 
-.iconButton svg {
+.icon-btn svg {
   width: 18px;
   height: 18px;
 }

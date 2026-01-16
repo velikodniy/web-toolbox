@@ -4,9 +4,10 @@ import { BrowserRouter } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import App from './App.tsx';
 import './index.css';
-// Page-specific CSS is imported here (not in page components) because
-// Deno tests import components directly and can't process CSS files.
-import './pages/uuid-tool.css';
+// CSS is imported here (not in components) because Deno tests import
+// components directly and can't process CSS files.
+import './components/ui/components.css';
+import './features/uuid/uuid-tool.css';
 import './pages/gpx-tool.css';
 import './pages/password-tool.css';
 

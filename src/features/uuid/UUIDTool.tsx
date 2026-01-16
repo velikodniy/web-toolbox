@@ -1,20 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
-import { useCopyToClipboard } from '../hooks/useCopyToClipboard.ts';
-import { useDebounce } from '../hooks/useDebounce.ts';
 import { FaSync } from 'react-icons/fa';
+import { CopyButton, ErrorMessage } from '../../components/ui/index.ts';
+import { useDebounce } from '../../hooks/useDebounce.ts';
 import {
   generateUuid,
   MAX_UUID,
   NULL_UUID,
   STANDARD_NAMESPACES,
   type UuidVersion,
-} from '../lib/uuid/uuid-domain.ts';
+} from './lib/uuid-domain.ts';
 import {
   analyzeUuid,
   type UuidAnalysis,
   type UuidPart,
-} from '../lib/uuid/uuid-analyzer.ts';
+} from './lib/uuid-analyzer.ts';
 
 type NamespaceOption = 'DNS' | 'URL' | 'OID' | 'X500' | 'custom';
 
@@ -84,7 +83,6 @@ const UUIDTool = () => {
   const [analysis, setAnalysis] = useState<UuidAnalysis | null>(null);
   const [analyzeError, setAnalyzeError] = useState<string | null>(null);
 
-  const [, copy] = useCopyToClipboard();
   const debouncedAnalyzeInput = useDebounce(analyzeInput, 300);
 
   const doGenerate = useCallback(
@@ -142,15 +140,6 @@ const UUIDTool = () => {
       setAnalyzeError(result.error);
     }
   }, [debouncedAnalyzeInput]);
-
-  const handleCopy = async (text: string) => {
-    const success = await copy(text);
-    if (success) {
-      toast.success('Copied!');
-    } else {
-      toast.error('Failed to copy');
-    }
-  };
 
   const handleSetNull = () => {
     setUuid(NULL_UUID);
@@ -372,7 +361,7 @@ const UUIDTool = () => {
           </button>
         </div>
 
-        {generateError && <div className='error-message'>{generateError}</div>}
+        <ErrorMessage error={generateError} />
 
         {uuid && !generateError && (
           <div className='result-section'>
@@ -386,13 +375,7 @@ const UUIDTool = () => {
                 >
                   Analyze
                 </button>
-                <button
-                  type='button'
-                  className='btn btn-secondary btn-sm'
-                  onClick={() => handleCopy(uuid)}
-                >
-                  Copy
-                </button>
+                <CopyButton text={uuid} />
               </div>
             </div>
             <div className='result-output'>{uuid}</div>
@@ -415,7 +398,7 @@ const UUIDTool = () => {
           />
         </div>
 
-        {analyzeError && <div className='error-message'>{analyzeError}</div>}
+        <ErrorMessage error={analyzeError} />
 
         {analysis && (
           <div className='result-section'>
