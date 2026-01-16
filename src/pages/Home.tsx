@@ -5,6 +5,7 @@ import {
   FiCode,
   FiKey,
   FiLink,
+  FiLock,
   FiMap,
   FiMapPin,
   FiShield,
@@ -41,6 +42,12 @@ const Home: React.FC = () => {
       description: 'Generate SHA-1 and SHA-256 hashes from text',
       path: '/hash-generator',
       icon: <FiShield />,
+    },
+    {
+      name: 'Password Generator',
+      description: 'Create secure passwords and passphrases',
+      path: '/password-generator',
+      icon: <FiLock />,
     },
     {
       name: 'Postcode Lookup',

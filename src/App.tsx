@@ -11,6 +11,7 @@ import URLEncoder from './pages/URLEncoder.tsx';
 import HashGenerator from './pages/HashGenerator.tsx';
 import PostcodeLookup from './pages/PostcodeLookup.tsx';
 import GPXDrawTool from './pages/GPXDrawTool.tsx';
+import PasswordGenerator from './pages/PasswordGenerator.tsx';
 
 function getInitialTheme(): 'light' | 'dark' {
   if (typeof document !== 'undefined') {
@@ -99,6 +100,10 @@ function App() {
               <Route path='/hash-generator' element={<HashGenerator />} />
               <Route path='/postcode-lookup' element={<PostcodeLookup />} />
               <Route path='/gpx-draw' element={<GPXDrawTool />} />
+              <Route
+                path='/password-generator'
+                element={<PasswordGenerator />}
+              />
             </Routes>
           </div>
         </main>

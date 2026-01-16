@@ -8,6 +8,7 @@ import './index.css';
 // Deno tests import components directly and can't process CSS files.
 import './pages/uuid-tool.css';
 import './pages/gpx-tool.css';
+import './pages/password-tool.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
