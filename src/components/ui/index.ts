@@ -1,3 +1,4 @@
+export { BidirectionalConverter } from './BidirectionalConverter.tsx';
 export { CopyButton } from './CopyButton.tsx';
 export { ErrorMessage } from './ErrorMessage.tsx';
 export { SplitView } from './SplitView.tsx';
