@@ -63,3 +63,9 @@ test('randomInt validates maxExclusive', () => {
   expect(() => randomInt(-1, rng)).toThrow();
   expect(() => randomInt(3.5, rng)).toThrow();
 });
+
+test('randomInt rejects maxExclusive exceeding 2^32', () => {
+  const rng = (length: number) => new Uint8Array(length);
+  const UINT32_SPAN = 0xffffffff + 1;
+  expect(() => randomInt(UINT32_SPAN + 1, rng)).toThrow('must not exceed 2^32');
+});

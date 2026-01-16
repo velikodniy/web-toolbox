@@ -27,6 +27,9 @@ export function randomInt(
   if (!Number.isInteger(maxExclusive) || maxExclusive <= 0) {
     throw new Error('maxExclusive must be a positive integer');
   }
+  if (maxExclusive > UINT32_SPAN) {
+    throw new Error('maxExclusive must not exceed 2^32');
+  }
 
   const maxAcceptable =
     (Math.floor(UINT32_SPAN / maxExclusive) * maxExclusive) -
