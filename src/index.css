@@ -32,6 +32,27 @@
 
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+  /* UUID part colors */
+  --uuid-time-low: #2563eb;
+  --uuid-time-mid: #7c3aed;
+  --uuid-time-hi-version: #db2777;
+  --uuid-time-hi: #c026d3;
+  --uuid-clock-seq: #ea580c;
+  --uuid-node: #059669;
+  --uuid-random-a: #4f46e5;
+  --uuid-random-b: #7c3aed;
+  --uuid-random-c: #9333ea;
+  --uuid-random-d: #0891b2;
+  --uuid-version: #dc2626;
+  --uuid-variant: #d97706;
+  --uuid-unix-ts: #2563eb;
+  --uuid-rand-a: #7c3aed;
+  --uuid-rand-b: #0891b2;
+  --uuid-hash-a: #0d9488;
+  --uuid-hash-b: #0891b2;
+  --uuid-hash-c: #0284c7;
+  --uuid-hash-d: #2563eb;
 }
 
 [data-theme='dark'] {
@@ -61,6 +82,27 @@
 
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+
+  /* UUID part colors - brighter for dark mode */
+  --uuid-time-low: #60a5fa;
+  --uuid-time-mid: #a78bfa;
+  --uuid-time-hi-version: #f472b6;
+  --uuid-time-hi: #e879f9;
+  --uuid-clock-seq: #fb923c;
+  --uuid-node: #34d399;
+  --uuid-random-a: #818cf8;
+  --uuid-random-b: #a78bfa;
+  --uuid-random-c: #c084fc;
+  --uuid-random-d: #22d3ee;
+  --uuid-version: #f87171;
+  --uuid-variant: #fbbf24;
+  --uuid-unix-ts: #60a5fa;
+  --uuid-rand-a: #a78bfa;
+  --uuid-rand-b: #22d3ee;
+  --uuid-hash-a: #2dd4bf;
+  --uuid-hash-b: #22d3ee;
+  --uuid-hash-c: #38bdf8;
+  --uuid-hash-d: #60a5fa;
 }
 
 * {
@@ -476,4 +518,36 @@ body {
 .btn-sm {
   padding: 0.5rem 0.75rem;
   font-size: 0.85rem;
+}
+
+/* Utility classes */
+.btn-compact {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mb-half {
+  margin-bottom: 0.5rem;
+}
+
+.label-inline {
+  display: inline;
+  margin-bottom: 0;
+  margin-right: 0.5rem;
 }
