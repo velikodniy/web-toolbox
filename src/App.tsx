@@ -4,14 +4,14 @@ import { Toaster } from 'react-hot-toast';
 import { FaGithub, FaMoon, FaSun } from 'react-icons/fa';
 import { HiExternalLink } from 'react-icons/hi';
 import Home from './pages/Home.tsx';
-import UUIDTool from './pages/UUIDTool.tsx';
 import Base64Tool from './pages/Base64Tool.tsx';
 import JSONFormatter from './pages/JSONFormatter.tsx';
 import URLEncoder from './pages/URLEncoder.tsx';
 import HashGenerator from './pages/HashGenerator.tsx';
 import PostcodeLookup from './pages/PostcodeLookup.tsx';
-import GPXDrawTool from './pages/GPXDrawTool.tsx';
-import PasswordGenerator from './pages/PasswordGenerator.tsx';
+import UUIDTool from './features/uuid/UUIDTool.tsx';
+import GPXDrawTool from './features/gpx/GPXDrawTool.tsx';
+import PasswordGenerator from './features/password/PasswordGenerator.tsx';
 
 function getInitialTheme(): 'light' | 'dark' {
   if (typeof document !== 'undefined') {
