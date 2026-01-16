@@ -1,4 +1,4 @@
-import { Result } from '../result.ts';
+import { Result } from '../../../lib/result.ts';
 import { randomInt, type RandomSource, secureRandomBytes } from './random.ts';
 
 const LOWERCASE = 'abcdefghijklmnopqrstuvwxyz';

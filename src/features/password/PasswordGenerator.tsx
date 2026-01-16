@@ -1,15 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
-import { FiCopy, FiRefreshCw } from 'react-icons/fi';
-import { useCopyToClipboard } from '../hooks/useCopyToClipboard.ts';
+import { FiRefreshCw } from 'react-icons/fi';
+import { CopyButton, ErrorMessage } from '../../components/ui/index.ts';
 import {
   generatePassword,
   type PasswordGenerationOptions,
-} from '../lib/password/password.ts';
+} from './lib/password.ts';
 import {
   generatePassphrase,
   type PassphraseOptions,
-} from '../lib/password/passphrase.ts';
+} from './lib/passphrase.ts';
 
 type Mode = 'password' | 'passphrase';
 
@@ -40,7 +39,6 @@ const PasswordGenerator = () => {
   );
   const [result, setResult] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
-  const [, copy] = useCopyToClipboard();
 
   const doGenerate = useCallback(
     (currentMode: Mode) => {
@@ -77,16 +75,6 @@ const PasswordGenerator = () => {
     doGenerate(mode);
   }, [mode, passwordOptions, passphraseOptions]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleCopy = useCallback(async () => {
-    if (!result) return;
-    const success = await copy(result);
-    if (success) {
-      toast.success('Copied!');
-    } else {
-      toast.error('Failed to copy');
-    }
-  }, [copy, result]);
-
   const handleModeChange = (nextMode: Mode) => {
     setMode(nextMode);
     setError(null);
@@ -118,20 +106,15 @@ const PasswordGenerator = () => {
           >
             <FiRefreshCw />
           </button>
-          <button
-            type='button'
-            className='pwd-icon-btn'
-            onClick={handleCopy}
-            disabled={!result}
-            aria-label='Copy to clipboard'
-            title='Copy to clipboard'
-          >
-            <FiCopy />
-          </button>
+          <CopyButton
+            text={result}
+            label='Copy to clipboard'
+            iconOnly
+          />
         </div>
       </div>
 
-      {error && <div className='error-message'>{error}</div>}
+      <ErrorMessage error={error} />
 
       {/* Mode toggle */}
       <div className='pwd-mode-toggle'>

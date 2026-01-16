@@ -9,7 +9,7 @@ import './index.css';
 import './components/ui/components.css';
 import './features/uuid/uuid-tool.css';
 import './features/gpx/gpx-tool.css';
-import './pages/password-tool.css';
+import './features/password/password-tool.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
