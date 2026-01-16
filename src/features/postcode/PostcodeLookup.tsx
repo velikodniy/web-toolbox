@@ -43,8 +43,8 @@ type DetailRowProps = {
 
 const DetailRow = ({ label, value, copyValue }: DetailRowProps) => (
   <div className='flex-between mb-half'>
-    <span style={{ color: 'var(--text-muted)' }}>{label}:</span>
-    <span className='flex-center' style={{ fontWeight: 500 }}>
+    <span className='text-muted'>{label}:</span>
+    <span className='flex-center font-medium'>
       {value}
       {copyValue && (
         <CopyButton
@@ -133,7 +133,7 @@ const PostcodeLookup: React.FC = () => {
   };
 
   const leftPane = data && (
-    <div className='result-output' style={{ marginBottom: '1.5rem' }}>
+    <div className='result-output mb-md'>
       <DetailRow label='Postcode' value={data.postcode} />
       <DetailRow label='Region' value={data.region || 'N/A'} />
       <DetailRow label='District' value={data.admin_district || 'N/A'} />
@@ -147,21 +147,11 @@ const PostcodeLookup: React.FC = () => {
   );
 
   const rightPane = data && (
-    <div
-      className='map-wrapper'
-      style={{
-        height: '400px',
-        borderRadius: '12px',
-        overflow: 'hidden',
-        border: '1px solid var(--border-color)',
-        position: 'relative',
-        zIndex: 0,
-      }}
-    >
+    <div className='map-container'>
       <MapContainer
         center={[data.latitude, data.longitude]}
         zoom={15}
-        style={{ height: '100%', width: '100%' }}
+        className='h-full w-full'
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -196,38 +186,23 @@ const PostcodeLookup: React.FC = () => {
       <div className='form-group'>
         <label htmlFor='postcode-input'>Enter UK Postcode</label>
         <div className='flex-center'>
-          <div style={{ position: 'relative', maxWidth: '200px' }}>
+          <div className='relative'>
             <input
               id='postcode-input'
-              className='form-input'
+              className='form-input input-postcode'
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder='e.g. SW1A 1AA'
               maxLength={10}
-              style={{ fontSize: '1.1rem', letterSpacing: '0.05em' }}
             />
-            {loading && (
-              <div
-                style={{
-                  position: 'absolute',
-                  right: '12px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  color: 'var(--text-muted)',
-                  fontSize: '0.8rem',
-                }}
-              >
-                ...
-              </div>
-            )}
+            {loading && <div className='loading-indicator'>...</div>}
           </div>
           <button
             type='button'
-            className='theme-toggle'
+            className={`theme-toggle ${!input.trim() ? 'opacity-muted' : ''}`}
             onClick={shareLink}
             disabled={!input.trim()}
             title='Copy link to this postcode'
-            style={{ opacity: input.trim() ? 1 : 0.4 }}
           >
             <FiShare2 />
           </button>
