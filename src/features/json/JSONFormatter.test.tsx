@@ -1,4 +1,5 @@
 import 'data:text/javascript,import "npm:global-jsdom@24.0.0/register";';
+import '../../test/setup.ts';
 import {
   cleanup,
   fireEvent,
@@ -10,12 +11,6 @@ import { expect } from 'npm:expect@30.2.0';
 import JSONFormatter from './JSONFormatter.tsx';
 
 const test = Deno.test;
-
-Object.assign(navigator, {
-  clipboard: {
-    writeText: () => Promise.resolve(),
-  },
-});
 
 test('JSONFormatter validates real-time', async () => {
   cleanup();

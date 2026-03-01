@@ -1,4 +1,5 @@
 import 'data:text/javascript,import "npm:global-jsdom@24.0.0/register";';
+import '../../test/setup.ts';
 import {
   cleanup,
   fireEvent,
@@ -14,12 +15,6 @@ const test = Deno.test;
 Object.defineProperty(navigator, 'platform', {
   value: 'MacIntel',
   writable: true,
-});
-
-Object.assign(navigator, {
-  clipboard: {
-    writeText: () => Promise.resolve(),
-  },
 });
 
 // Mock window.matchMedia for Leaflet
