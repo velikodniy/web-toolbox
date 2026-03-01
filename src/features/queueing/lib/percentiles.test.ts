@@ -3,7 +3,6 @@ import { expect } from 'npm:expect@30.2.0';
 import {
   calculateExceedanceProbability,
   calculateWaitPercentile,
-  type PercentileResult,
 } from './percentiles.ts';
 
 const test = Deno.test;

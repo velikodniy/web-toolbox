@@ -1,6 +1,7 @@
 import { type ComponentType, lazy } from 'react';
 import type { ReactNode } from 'react';
 import {
+  FiActivity,
   FiAlignLeft,
   FiCode,
   FiKey,
@@ -75,5 +76,15 @@ export const tools: ToolDefinition[] = [
     description: 'Draw markers and polylines on a map and export as GPX',
     icon: FiMap({}),
     component: lazy(() => import('./features/gpx/GPXDrawTool.tsx')),
+  },
+  {
+    path: '/queueing',
+    name: 'Queueing Calculator',
+    description:
+      'Model server capacity, predict wait times, and check SLA targets',
+    icon: FiActivity({}),
+    component: lazy(
+      () => import('./features/queueing/QueueingCalculator.tsx'),
+    ),
   },
 ];
