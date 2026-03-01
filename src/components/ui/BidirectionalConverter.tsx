@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDebounce } from '../../hooks/useDebounce.ts';
+import type { Result } from '../../lib/result.ts';
 import { CopyButton } from './CopyButton.tsx';
 import { ErrorMessage } from './ErrorMessage.tsx';
 import { SplitView } from './SplitView.tsx';
 
-type ConversionResult =
-  | { success: true; value: string }
-  | { success: false; error: string };
-
 type BidirectionalConverterProps = {
-  encode: (input: string) => ConversionResult;
-  decode: (input: string) => ConversionResult;
+  encode: (input: string) => Result<string>;
+  decode: (input: string) => Result<string>;
   labels: {
     decoded: string;
     encoded: string;
@@ -31,7 +28,9 @@ export function BidirectionalConverter({
 }: BidirectionalConverterProps) {
   const [decoded, setDecoded] = useState('');
   const [encoded, setEncoded] = useState('');
-  const [lastEdited, setLastEdited] = useState<'decoded' | 'encoded'>('decoded');
+  const [lastEdited, setLastEdited] = useState<'decoded' | 'encoded'>(
+    'decoded',
+  );
   const [error, setError] = useState<string | null>(null);
 
   const debouncedDecoded = useDebounce(decoded, debounceMs);
@@ -42,7 +41,7 @@ export function BidirectionalConverter({
 
     const result = encode(debouncedDecoded);
     if (result.success) {
-      setEncoded(result.value);
+      setEncoded(result.data);
       setError(null);
     } else {
       setError(result.error);
@@ -60,7 +59,7 @@ export function BidirectionalConverter({
 
     const result = decode(debouncedEncoded);
     if (result.success) {
-      setDecoded(result.value);
+      setDecoded(result.data);
       setError(null);
     } else {
       setError(result.error);

@@ -3,20 +3,21 @@ import {
   BidirectionalConverter,
   ToolPageLayout,
 } from '../../components/ui/index.ts';
+import type { Result } from '../../lib/result.ts';
 
-const encode = (input: string) => {
+const encode = (input: string): Result<string> => {
   try {
-    return { success: true as const, value: btoa(input) };
+    return { success: true, data: btoa(input) };
   } catch {
-    return { success: false as const, error: 'Failed to encode.' };
+    return { success: false, error: 'Failed to encode.' };
   }
 };
 
-const decode = (input: string) => {
+const decode = (input: string): Result<string> => {
   try {
-    return { success: true as const, value: atob(input) };
+    return { success: true, data: atob(input) };
   } catch {
-    return { success: false as const, error: 'Invalid Base64 string.' };
+    return { success: false, error: 'Invalid Base64 string.' };
   }
 };
 

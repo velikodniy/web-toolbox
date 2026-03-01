@@ -3,20 +3,21 @@ import {
   BidirectionalConverter,
   ToolPageLayout,
 } from '../../components/ui/index.ts';
+import type { Result } from '../../lib/result.ts';
 
-const encode = (input: string) => {
+const encode = (input: string): Result<string> => {
   try {
-    return { success: true as const, value: encodeURIComponent(input) };
+    return { success: true, data: encodeURIComponent(input) };
   } catch {
-    return { success: false as const, error: 'Failed to encode.' };
+    return { success: false, error: 'Failed to encode.' };
   }
 };
 
-const decode = (input: string) => {
+const decode = (input: string): Result<string> => {
   try {
-    return { success: true as const, value: decodeURIComponent(input) };
+    return { success: true, data: decodeURIComponent(input) };
   } catch {
-    return { success: false as const, error: 'Invalid URL encoding.' };
+    return { success: false, error: 'Invalid URL encoding.' };
   }
 };
 
@@ -31,8 +32,10 @@ const URLEncoder: React.FC = () => {
         decode={decode}
         labels={{ decoded: 'Decoded URL', encoded: 'Encoded URL' }}
         placeholders={{
-          decoded: 'Type decoded URL here... (e.g., https://example.com/foo bar)',
-          encoded: 'Type encoded URL here... (e.g., https%3A%2F%2Fexample.com%2Ffoo%20bar)',
+          decoded:
+            'Type decoded URL here... (e.g., https://example.com/foo bar)',
+          encoded:
+            'Type encoded URL here... (e.g., https%3A%2F%2Fexample.com%2Ffoo%20bar)',
         }}
       />
     </ToolPageLayout>
