@@ -538,6 +538,10 @@ body {
   gap: 0.5rem;
 }
 
+.gap-half {
+  gap: 0.5rem;
+}
+
 .flex-col {
   display: flex;
   flex-direction: column;

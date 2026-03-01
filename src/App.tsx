@@ -74,12 +74,7 @@ function App() {
                   href='https://github.com/velikodniy/web-toolbox'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='nav-link'
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                  }}
+                  className='nav-link flex-center gap-half'
                 >
                   <FaGithub />
                   GitHub

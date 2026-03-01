@@ -106,8 +106,7 @@ export function MapView({
       <MapContainer
         center={[51.505, -0.09]}
         zoom={13}
-        className={`gpx-map ${mode}-mode`}
-        style={{ height: '100%', width: '100%' }}
+        className={`gpx-map ${mode}-mode h-full w-full`}
         ref={(map) => {
           if (map) {
             mapRef.current = map;
