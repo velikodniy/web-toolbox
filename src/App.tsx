@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Navigate, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { FaGithub, FaMoon, FaSun } from 'react-icons/fa';
 import { HiExternalLink } from 'react-icons/hi';
@@ -104,6 +104,7 @@ function App() {
                 path='/password-generator'
                 element={<PasswordGenerator />}
               />
+              <Route path='*' element={<Navigate to='/' replace />} />
             </Routes>
           </div>
         </main>
