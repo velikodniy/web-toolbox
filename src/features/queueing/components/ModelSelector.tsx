@@ -1,11 +1,22 @@
 import { ModelDiagram } from '../lib/diagrams.tsx';
-
-type ModelType = 'MM1' | 'MMc' | 'MM1K' | 'MMcK' | 'MG1' | 'MD1';
+import type { ModelType } from '../lib/types.ts';
 
 type ModelInfo = {
   name: string;
   description: string;
 };
+
+const MODEL_KEYS: readonly ModelType[] = [
+  'MM1',
+  'MMc',
+  'MM1K',
+  'MMcK',
+  'MG1',
+  'MD1',
+];
+
+const isModelType = (value: string): value is ModelType =>
+  (MODEL_KEYS as readonly string[]).includes(value);
 
 const MODEL_INFO: Record<ModelType, ModelInfo> = {
   MM1: { name: 'M/M/1', description: 'Single server, infinite queue' },
@@ -43,15 +54,18 @@ export const ModelSelector = (
           id='model-select'
           className='form-input'
           value={model}
-          onChange={(e) => onModelChange(e.target.value as ModelType)}
+          onChange={(e) => {
+            if (isModelType(e.target.value)) onModelChange(e.target.value);
+          }}
         >
-          {(Object.entries(MODEL_INFO) as [ModelType, ModelInfo][]).map(
-            ([key, m]) => (
+          {MODEL_KEYS.map((key) => {
+            const m = MODEL_INFO[key];
+            return (
               <option key={key} value={key}>
                 {m.name} — {m.description}
               </option>
-            ),
-          )}
+            );
+          })}
         </select>
       </div>
       <ModelDiagram

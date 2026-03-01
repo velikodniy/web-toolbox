@@ -359,7 +359,7 @@ export const calculateMM1K = (
       throughput: effectiveLambda,
       effectiveArrivalRate: effectiveLambda,
       blockingProbability: PK,
-      probabilityOfWait: 1 - P0 - PK,
+      probabilityOfWait: Math.max(0, 1 - P0 - PK),
     },
   };
 };
@@ -494,7 +494,6 @@ export const calculateMG1 = (
     arrivalRate: lambda,
     serviceRate: mu,
     serviceTimeVariance: variance,
-    targetN,
   } = input;
 
   const arrivalError = validatePositiveRate(
@@ -533,11 +532,7 @@ export const calculateMG1 = (
   const W = Wq + 1 / mu;
   const L = lambda * W;
   const P0 = 1 - rho;
-
-  let Pn: number | undefined;
-  if (targetN !== undefined && targetN >= 0) {
-    Pn = P0 * rho ** targetN;
-  }
+  const Pn: number | undefined = undefined;
 
   return {
     success: true,

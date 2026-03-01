@@ -1,7 +1,6 @@
 import { CopyButton } from '../../../components/ui/index.ts';
-import { secondsToMs } from '../lib/unit-conversion.ts';
-
-type ModelType = 'MM1' | 'MMc' | 'MM1K' | 'MMcK' | 'MG1' | 'MD1';
+import { formatMs, secondsToMs } from '../lib/unit-conversion.ts';
+import { isFiniteCapacity, type ModelType } from '../lib/types.ts';
 
 export type PerformanceResultsProps = {
   utilization: number;
@@ -11,16 +10,6 @@ export type PerformanceResultsProps = {
   throughput: number;
   model: ModelType;
   blockingProbability: number;
-};
-
-const isFiniteCapacity = (model: ModelType): boolean =>
-  model === 'MM1K' || model === 'MMcK';
-
-const formatMs = (seconds: number): string => {
-  const ms = secondsToMs(seconds);
-  if (ms >= 1000) return `${(ms / 1000).toFixed(2)} s`;
-  if (ms >= 1) return `${ms.toFixed(1)} ms`;
-  return `${(ms * 1000).toFixed(1)} \u03BCs`;
 };
 
 export const PerformanceResults = ({

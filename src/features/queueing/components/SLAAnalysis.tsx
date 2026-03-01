@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   calculateExceedanceProbability,
   calculateWaitPercentile,
 } from '../lib/percentiles.ts';
-import { secondsToMs } from '../lib/unit-conversion.ts';
-
-type ModelType = 'MM1' | 'MMc' | 'MM1K' | 'MMcK' | 'MG1' | 'MD1';
+import { formatMs } from '../lib/unit-conversion.ts';
+import type { ModelType } from '../lib/types.ts';
 
 export type SLAAnalysisProps = {
   model: ModelType;
@@ -22,13 +21,6 @@ const PERCENTILE_LABELS = ['P50', 'P90', 'P95', 'P99'] as const;
 const isApproximate = (model: ModelType): boolean =>
   model !== 'MM1' && model !== 'MMc';
 
-const formatMs = (seconds: number): string => {
-  const ms = secondsToMs(seconds);
-  if (ms >= 1000) return `${(ms / 1000).toFixed(2)} s`;
-  if (ms >= 1) return `${ms.toFixed(1)} ms`;
-  return `${(ms * 1000).toFixed(1)} \u03BCs`;
-};
-
 export const SLAAnalysis = ({
   model,
   utilization,
@@ -41,16 +33,20 @@ export const SLAAnalysis = ({
 
   const approximate = isApproximate(model);
 
-  const percentileResults = PERCENTILES.map((p) =>
-    calculateWaitPercentile({
-      model,
-      utilization,
-      serviceRate,
-      percentile: p,
-      servers,
-      probabilityOfWait,
-      Wq,
-    })
+  const percentileResults = useMemo(
+    () =>
+      PERCENTILES.map((p) =>
+        calculateWaitPercentile({
+          model,
+          utilization,
+          serviceRate,
+          percentile: p,
+          servers,
+          probabilityOfWait,
+          Wq,
+        })
+      ),
+    [model, utilization, serviceRate, servers, probabilityOfWait, Wq],
   );
 
   const targetSeconds = Number.parseFloat(targetMs) / 1000;

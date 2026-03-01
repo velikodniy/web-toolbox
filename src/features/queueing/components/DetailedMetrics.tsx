@@ -1,8 +1,7 @@
 import { type ReactNode } from 'react';
 import { CopyButton } from '../../../components/ui/index.ts';
 import type { QueueingResult } from '../lib/queueing.ts';
-
-type ModelType = 'MM1' | 'MMc' | 'MM1K' | 'MMcK' | 'MG1' | 'MD1';
+import { isFiniteCapacity, type ModelType } from '../lib/types.ts';
 
 export type DetailedMetricsProps = {
   result: QueueingResult;
@@ -16,9 +15,6 @@ type MetricDef = {
   format: (v: number) => string;
   showFor?: (model: ModelType) => boolean;
 };
-
-const isFiniteCapacity = (model: ModelType): boolean =>
-  model === 'MM1K' || model === 'MMcK';
 
 const pct = (v: number): string => `${(v * 100).toFixed(2)}%`;
 const dec = (v: number): string => v.toFixed(6);
@@ -129,7 +125,7 @@ export const DetailedMetrics = ({ result, model }: DetailedMetricsProps) => {
                 <CopyButton text={String(value)} compact />
               </div>
               <div className='metric-value'>
-                {m.format(value as number)}
+                {m.format(Number(value))}
               </div>
               <div className='metric-description'>{m.description}</div>
             </div>

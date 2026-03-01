@@ -1,6 +1,5 @@
-import { msToRate } from '../lib/unit-conversion.ts';
-
-type ModelType = 'MM1' | 'MMc' | 'MM1K' | 'MMcK' | 'MG1' | 'MD1';
+import { msToRate, varianceMsToSeconds } from '../lib/unit-conversion.ts';
+import type { ModelType } from '../lib/types.ts';
 
 export type InputPanelProps = {
   model: ModelType;
@@ -38,7 +37,7 @@ export const InputPanel = ({
 
   const lambda = Number.parseFloat(requestRate);
   const mu = msToRate(Number.parseFloat(responseTime));
-  const sigmaS = Number.parseFloat(varianceMs) / 1_000_000;
+  const sigmaS = varianceMsToSeconds(Number.parseFloat(varianceMs));
 
   return (
     <div className='input-grid'>

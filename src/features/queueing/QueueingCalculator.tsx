@@ -18,8 +18,7 @@ import { InputPanel } from './components/InputPanel.tsx';
 import { PerformanceResults } from './components/PerformanceResults.tsx';
 import { SLAAnalysis } from './components/SLAAnalysis.tsx';
 import { DetailedMetrics } from './components/DetailedMetrics.tsx';
-
-type ModelType = 'MM1' | 'MMc' | 'MM1K' | 'MMcK' | 'MG1' | 'MD1';
+import type { ModelType } from './lib/types.ts';
 
 const DEBOUNCE_MS = 300;
 

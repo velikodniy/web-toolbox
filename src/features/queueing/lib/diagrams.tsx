@@ -1,4 +1,4 @@
-type ModelType = 'MM1' | 'MMc' | 'MM1K' | 'MMcK' | 'MG1' | 'MD1';
+import type { ModelType } from './types.ts';
 
 type ModelDiagramProps = {
   model: ModelType;
