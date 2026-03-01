@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { FaSync } from 'react-icons/fa';
-import { CopyButton, ErrorMessage } from '../../components/ui/index.ts';
+import {
+  CopyButton,
+  ErrorMessage,
+  ToolPageLayout,
+} from '../../components/ui/index.ts';
 import { useDebounce } from '../../hooks/useDebounce.ts';
 import {
   generateUuid,
@@ -272,12 +276,10 @@ const UUIDTool = () => {
   };
 
   return (
-    <div className='tool-page'>
-      <h1>UUID Generator & Analyzer</h1>
-      <p className='description'>
-        Generate and analyze UUIDs to see their structure and decoded values.
-      </p>
-
+    <ToolPageLayout
+      title='UUID Generator & Analyzer'
+      description='Generate and analyze UUIDs to see their structure and decoded values.'
+    >
       <div className='uuid-section'>
         <h2 className='uuid-section-title'>Generate UUID</h2>
 
@@ -499,7 +501,7 @@ const UUIDTool = () => {
           </div>
         )}
       </div>
-    </div>
+    </ToolPageLayout>
   );
 };
 

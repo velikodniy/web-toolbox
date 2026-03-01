@@ -18,6 +18,7 @@ import { useMapFocus } from './hooks/useMapFocus.ts';
 import { ModeSwitch } from './components/ModeSwitch.tsx';
 import { MapView } from './components/MapView.tsx';
 import { GPXSidebar } from './components/GPXSidebar.tsx';
+import { ToolPageLayout } from '../../components/ui/index.ts';
 
 const GPXDrawTool: React.FC = () => {
   const [state, setState] = useState<DrawingState>(createInitialState);
@@ -140,12 +141,11 @@ const GPXDrawTool: React.FC = () => {
   }, [highlightedTrackId]);
 
   return (
-    <div className='tool-page'>
-      <h1>GPX Draw Tool</h1>
-      <p className='description'>
-        Draw GPX markers and tracks on the map, then export as GPX.
-      </p>
-
+    <ToolPageLayout
+      title='GPX Draw Tool'
+      description='Draw GPX markers and tracks on the map, then export as GPX.'
+      maxWidth='full'
+    >
       <div className='tool-controls gpx-controls'>
         <ModeSwitch mode={state.mode} onChange={changeMode} />
 
@@ -199,7 +199,7 @@ const GPXDrawTool: React.FC = () => {
           onDeleteTrack={handleDeleteTrack}
         />
       </div>
-    </div>
+    </ToolPageLayout>
   );
 };
 

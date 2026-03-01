@@ -4,13 +4,7 @@ type ToolPageLayoutProps = {
   title: string;
   description: string;
   children: ReactNode;
-  maxWidth?: 'default' | 'narrow' | 'wide';
-};
-
-const maxWidthStyles: Record<string, string> = {
-  default: '800px',
-  narrow: '480px',
-  wide: '1200px',
+  maxWidth?: 'default' | 'narrow' | 'wide' | 'full';
 };
 
 export function ToolPageLayout({
@@ -19,8 +13,9 @@ export function ToolPageLayout({
   children,
   maxWidth = 'default',
 }: ToolPageLayoutProps) {
+  const widthClass = maxWidth === 'default' ? '' : `tool-page-${maxWidth}`;
   return (
-    <div className='tool-page' style={{ maxWidth: maxWidthStyles[maxWidth] }}>
+    <div className={`tool-page ${widthClass}`.trim()}>
       <h1>{title}</h1>
       <p className='description'>{description}</p>
       {children}

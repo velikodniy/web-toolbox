@@ -283,6 +283,18 @@ body {
   margin: 0 auto;
 }
 
+.tool-page-narrow {
+  max-width: 480px;
+}
+
+.tool-page-wide {
+  max-width: 1200px;
+}
+
+.tool-page-full {
+  max-width: none;
+}
+
 .tool-page h1 {
   font-size: 2rem;
   font-weight: 700;
