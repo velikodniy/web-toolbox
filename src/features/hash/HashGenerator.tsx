@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { CopyButton, ToolPageLayout } from '../../components/ui/index.ts';
-import { useDebounce } from '../../hooks/useDebounce.ts';
+import { useDebounceEffect } from '../../hooks/useDebounceEffect.ts';
 
 const HashGenerator: React.FC = () => {
   const [input, setInput] = useState<string>('');
@@ -9,9 +9,7 @@ const HashGenerator: React.FC = () => {
     sha256: string | null;
   }>({ sha1: null, sha256: null });
 
-  const debouncedInput = useDebounce(input, 300);
-
-  useEffect(() => {
+  useDebounceEffect(input, 300, (debouncedInput) => {
     const generate = async () => {
       if (!debouncedInput.trim()) {
         setHashes({ sha1: null, sha256: null });
@@ -39,7 +37,7 @@ const HashGenerator: React.FC = () => {
     };
 
     generate();
-  }, [debouncedInput]);
+  });
 
   return (
     <ToolPageLayout

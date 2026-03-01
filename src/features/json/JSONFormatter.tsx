@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   CopyButton,
   ErrorMessage,
   SplitView,
   ToolPageLayout,
 } from '../../components/ui/index.ts';
-import { useDebounce } from '../../hooks/useDebounce.ts';
+import { useDebounceEffect } from '../../hooks/useDebounceEffect.ts';
 
 const JSONFormatter: React.FC = () => {
   const [input, setInput] = useState<string>('');
@@ -14,9 +14,7 @@ const JSONFormatter: React.FC = () => {
   const [valid, setValid] = useState<boolean>(false);
   const [indentSize, setIndentSize] = useState<number>(2);
 
-  const debouncedInput = useDebounce(input, 300);
-
-  useEffect(() => {
+  useDebounceEffect(input, 300, (debouncedInput) => {
     if (!debouncedInput.trim()) {
       setError(null);
       setValid(false);
@@ -30,7 +28,7 @@ const JSONFormatter: React.FC = () => {
       setError('Invalid JSON');
       setValid(false);
     }
-  }, [debouncedInput]);
+  });
 
   const formatJSON = () => {
     try {
