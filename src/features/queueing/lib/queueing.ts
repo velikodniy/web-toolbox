@@ -71,7 +71,7 @@ type MD1Input = {
 const validatePositiveRate = (
   rate: number,
   code: ValidationErrorCode,
-  name: string
+  name: string,
 ): ValidationError | null => {
   if (rate <= 0 || !Number.isFinite(rate)) {
     return { code, message: `${name} must be a positive number` };
@@ -91,7 +91,7 @@ const validateServers = (servers: number): ValidationError | null => {
 
 const validateCapacity = (
   capacity: number,
-  minCapacity: number
+  minCapacity: number,
 ): ValidationError | null => {
   if (capacity < minCapacity || !Number.isInteger(capacity)) {
     return {
@@ -122,21 +122,21 @@ const powOverFactorial = (base: number, n: number): number => {
 };
 
 export const calculateMM1 = (
-  input: MM1Input
+  input: MM1Input,
 ): Result<QueueingResult, ValidationError> => {
   const { arrivalRate: lambda, serviceRate: mu, targetN } = input;
 
   const arrivalError = validatePositiveRate(
     lambda,
     'INVALID_ARRIVAL_RATE',
-    'Arrival rate'
+    'Arrival rate',
   );
   if (arrivalError) return { success: false, error: arrivalError };
 
   const serviceError = validatePositiveRate(
     mu,
     'INVALID_SERVICE_RATE',
-    'Service rate'
+    'Service rate',
   );
   if (serviceError) return { success: false, error: serviceError };
 
@@ -199,7 +199,7 @@ const calculateErlangC = (
   lambda: number,
   mu: number,
   c: number,
-  P0: number
+  P0: number,
 ): number => {
   const a = lambda / mu;
   const rho = lambda / (c * mu);
@@ -207,21 +207,21 @@ const calculateErlangC = (
 };
 
 export const calculateMMc = (
-  input: MMcInput
+  input: MMcInput,
 ): Result<QueueingResult, ValidationError> => {
   const { arrivalRate: lambda, serviceRate: mu, servers: c, targetN } = input;
 
   const arrivalError = validatePositiveRate(
     lambda,
     'INVALID_ARRIVAL_RATE',
-    'Arrival rate'
+    'Arrival rate',
   );
   if (arrivalError) return { success: false, error: arrivalError };
 
   const serviceError = validatePositiveRate(
     mu,
     'INVALID_SERVICE_RATE',
-    'Service rate'
+    'Service rate',
   );
   if (serviceError) return { success: false, error: serviceError };
 
@@ -279,7 +279,7 @@ export const calculateMMc = (
 const calculateMM1KStateProbabilities = (
   lambda: number,
   mu: number,
-  K: number
+  K: number,
 ): number[] => {
   const rho = lambda / mu;
   const probabilities: number[] = [];
@@ -300,21 +300,21 @@ const calculateMM1KStateProbabilities = (
 };
 
 export const calculateMM1K = (
-  input: MM1KInput
+  input: MM1KInput,
 ): Result<QueueingResult, ValidationError> => {
   const { arrivalRate: lambda, serviceRate: mu, capacity: K, targetN } = input;
 
   const arrivalError = validatePositiveRate(
     lambda,
     'INVALID_ARRIVAL_RATE',
-    'Arrival rate'
+    'Arrival rate',
   );
   if (arrivalError) return { success: false, error: arrivalError };
 
   const serviceError = validatePositiveRate(
     mu,
     'INVALID_SERVICE_RATE',
-    'Service rate'
+    'Service rate',
   );
   if (serviceError) return { success: false, error: serviceError };
 
@@ -368,7 +368,7 @@ const calculateMMcKStateProbabilities = (
   lambda: number,
   mu: number,
   c: number,
-  K: number
+  K: number,
 ): number[] => {
   const a = lambda / mu;
   const probabilities: number[] = [];
@@ -404,7 +404,7 @@ const calculateMMcKStateProbabilities = (
 };
 
 export const calculateMMcK = (
-  input: MMcKInput
+  input: MMcKInput,
 ): Result<QueueingResult, ValidationError> => {
   const {
     arrivalRate: lambda,
@@ -417,14 +417,14 @@ export const calculateMMcK = (
   const arrivalError = validatePositiveRate(
     lambda,
     'INVALID_ARRIVAL_RATE',
-    'Arrival rate'
+    'Arrival rate',
   );
   if (arrivalError) return { success: false, error: arrivalError };
 
   const serviceError = validatePositiveRate(
     mu,
     'INVALID_SERVICE_RATE',
-    'Service rate'
+    'Service rate',
   );
   if (serviceError) return { success: false, error: serviceError };
 
@@ -488,7 +488,7 @@ export const calculateMMcK = (
 };
 
 export const calculateMG1 = (
-  input: MG1Input
+  input: MG1Input,
 ): Result<QueueingResult, ValidationError> => {
   const {
     arrivalRate: lambda,
@@ -500,14 +500,14 @@ export const calculateMG1 = (
   const arrivalError = validatePositiveRate(
     lambda,
     'INVALID_ARRIVAL_RATE',
-    'Arrival rate'
+    'Arrival rate',
   );
   if (arrivalError) return { success: false, error: arrivalError };
 
   const serviceError = validatePositiveRate(
     mu,
     'INVALID_SERVICE_RATE',
-    'Service rate'
+    'Service rate',
   );
   if (serviceError) return { success: false, error: serviceError };
 
@@ -558,7 +558,7 @@ export const calculateMG1 = (
 };
 
 export const calculateMD1 = (
-  input: MD1Input
+  input: MD1Input,
 ): Result<QueueingResult, ValidationError> => {
   return calculateMG1({
     arrivalRate: input.arrivalRate,

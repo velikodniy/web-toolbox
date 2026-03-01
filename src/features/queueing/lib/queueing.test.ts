@@ -1,12 +1,12 @@
 /// <reference lib="deno.ns" />
 import { expect } from 'npm:expect@30.2.0';
 import {
-  calculateMM1,
-  calculateMMc,
-  calculateMM1K,
-  calculateMMcK,
-  calculateMG1,
   calculateMD1,
+  calculateMG1,
+  calculateMM1,
+  calculateMM1K,
+  calculateMMc,
+  calculateMMcK,
 } from './queueing.ts';
 
 const test = Deno.test;
@@ -231,7 +231,7 @@ test('M/M/c/K: reduces to M/M/1/K when c=1', () => {
   expectApprox(
     mmckResult.data.blockingProbability,
     mm1kResult.data.blockingProbability,
-    3
+    3,
   );
 });
 
@@ -469,7 +469,7 @@ test('M/M/1/K: larger capacity reduces blocking probability', () => {
   }
 
   expect(largeCapacity.data.blockingProbability).toBeLessThan(
-    smallCapacity.data.blockingProbability
+    smallCapacity.data.blockingProbability,
   );
 });
 
@@ -539,7 +539,7 @@ test('M/M/c/K: more servers reduce blocking probability', () => {
   }
 
   expect(manyServers.data.blockingProbability).toBeLessThan(
-    fewServers.data.blockingProbability
+    fewServers.data.blockingProbability,
   );
 });
 
@@ -649,13 +649,21 @@ test('M/M/c: Littles Law holds', () => {
 });
 
 test('M/M/1/K: Littles Law holds with effective arrival rate', () => {
-  const result = calculateMM1K({ arrivalRate: 2, serviceRate: 3, capacity: 10 });
+  const result = calculateMM1K({
+    arrivalRate: 2,
+    serviceRate: 3,
+    capacity: 10,
+  });
 
   if (!result.success) {
     throw new Error('Expected success');
   }
 
-  expectApprox(result.data.L, result.data.effectiveArrivalRate * result.data.W, 3);
+  expectApprox(
+    result.data.L,
+    result.data.effectiveArrivalRate * result.data.W,
+    3,
+  );
 });
 
 test('M/M/1: verified against atozmath.com (λ=8, μ=9)', () => {
@@ -730,12 +738,16 @@ test('M/M/c/K: probabilityOfWait excludes blocked state', () => {
 
   expect(result.data.blockingProbability).toBeGreaterThan(0.1);
   expect(result.data.probabilityOfWait).toBeLessThan(
-    1 - result.data.P0
+    1 - result.data.P0,
   );
 });
 
 test('M/M/c: handles large server count without overflow', () => {
-  const result = calculateMMc({ arrivalRate: 50, serviceRate: 1, servers: 100 });
+  const result = calculateMMc({
+    arrivalRate: 50,
+    serviceRate: 1,
+    servers: 100,
+  });
 
   if (!result.success) {
     throw new Error('Expected success');
