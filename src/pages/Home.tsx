@@ -1,68 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  FiAlignLeft,
-  FiCode,
-  FiKey,
-  FiLink,
-  FiLock,
-  FiMap,
-  FiMapPin,
-  FiShield,
-} from 'react-icons/fi';
+import { tools } from '../tools.ts';
 
 const Home: React.FC = () => {
-  const tools = [
-    {
-      name: 'UUID Tool',
-      description: 'Generate and analyze UUIDs',
-      path: '/uuid',
-      icon: <FiKey />,
-    },
-    {
-      name: 'Base64 Encoder/Decoder',
-      description: 'Encode and decode text to/from Base64 format',
-      path: '/base64-tool',
-      icon: <FiCode />,
-    },
-    {
-      name: 'JSON Formatter',
-      description: 'Format, validate, and beautify JSON data',
-      path: '/json-formatter',
-      icon: <FiAlignLeft />,
-    },
-    {
-      name: 'URL Encoder/Decoder',
-      description: 'Encode and decode URLs for safe transmission',
-      path: '/url-encoder',
-      icon: <FiLink />,
-    },
-    {
-      name: 'Hash Generator',
-      description: 'Generate SHA-1 and SHA-256 hashes from text',
-      path: '/hash-generator',
-      icon: <FiShield />,
-    },
-    {
-      name: 'Password Generator',
-      description: 'Create secure passwords and passphrases',
-      path: '/password-generator',
-      icon: <FiLock />,
-    },
-    {
-      name: 'Postcode Lookup',
-      description: 'Lookup UK postcodes, coordinates and administrative data',
-      path: '/postcode-lookup',
-      icon: <FiMapPin />,
-    },
-    {
-      name: 'GPX Draw Tool',
-      description: 'Draw markers and polylines on a map and export as GPX',
-      path: '/gpx-draw',
-      icon: <FiMap />,
-    },
-  ];
-
   return (
     <div>
       <section className='hero'>

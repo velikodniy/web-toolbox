@@ -1,17 +1,10 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Link, Navigate, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { FaGithub, FaMoon, FaSun } from 'react-icons/fa';
 import { HiExternalLink } from 'react-icons/hi';
 import Home from './pages/Home.tsx';
-import Base64Tool from './features/base64/Base64Tool.tsx';
-import URLEncoder from './features/url-encoder/URLEncoder.tsx';
-import HashGenerator from './features/hash/HashGenerator.tsx';
-import JSONFormatter from './features/json/JSONFormatter.tsx';
-import PostcodeLookup from './features/postcode/PostcodeLookup.tsx';
-import UUIDTool from './features/uuid/UUIDTool.tsx';
-import GPXDrawTool from './features/gpx/GPXDrawTool.tsx';
-import PasswordGenerator from './features/password/PasswordGenerator.tsx';
+import { tools } from './tools.ts';
 
 function getInitialTheme(): 'light' | 'dark' {
   if (typeof document !== 'undefined') {
@@ -88,17 +81,17 @@ function App() {
           <div className='container'>
             <Routes>
               <Route path='/' element={<Home />} />
-              <Route path='/uuid' element={<UUIDTool />} />
-              <Route path='/base64-tool' element={<Base64Tool />} />
-              <Route path='/json-formatter' element={<JSONFormatter />} />
-              <Route path='/url-encoder' element={<URLEncoder />} />
-              <Route path='/hash-generator' element={<HashGenerator />} />
-              <Route path='/postcode-lookup' element={<PostcodeLookup />} />
-              <Route path='/gpx-draw' element={<GPXDrawTool />} />
-              <Route
-                path='/password-generator'
-                element={<PasswordGenerator />}
-              />
+              {tools.map((tool) => (
+                <Route
+                  key={tool.path}
+                  path={tool.path}
+                  element={
+                    <Suspense fallback={null}>
+                      <tool.component />
+                    </Suspense>
+                  }
+                />
+              ))}
               <Route path='*' element={<Navigate to='/' replace />} />
             </Routes>
           </div>
