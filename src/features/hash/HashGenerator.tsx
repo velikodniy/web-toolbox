@@ -69,7 +69,11 @@ const HashGenerator: React.FC = () => {
             <div className='mb-md'>
               <div className='flex-between mb-half'>
                 <h4 className='mb-0'>SHA-1:</h4>
-                <CopyButton text={hashes.sha1} successMessage='SHA-1 hash copied!' compact />
+                <CopyButton
+                  text={hashes.sha1}
+                  successMessage='SHA-1 hash copied!'
+                  compact
+                />
               </div>
               <div className='result-output'>{hashes.sha1}</div>
             </div>
@@ -79,7 +83,11 @@ const HashGenerator: React.FC = () => {
             <div className='mb-md'>
               <div className='flex-between mb-half'>
                 <h4 className='mb-0'>SHA-256:</h4>
-                <CopyButton text={hashes.sha256} successMessage='SHA-256 hash copied!' compact />
+                <CopyButton
+                  text={hashes.sha256}
+                  successMessage='SHA-256 hash copied!'
+                  compact
+                />
               </div>
               <div className='result-output'>{hashes.sha256}</div>
             </div>

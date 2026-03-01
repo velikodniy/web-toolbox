@@ -35,7 +35,6 @@ function MapUpdater({ center }: { center: [number, number] }) {
   return null;
 }
 
-
 const PostcodeLookup: React.FC = () => {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);

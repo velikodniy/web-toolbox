@@ -54,26 +54,66 @@
 }
 
 /* UUID Part Colors - Using CSS variables from globals */
-.uuid-part-time_low { color: var(--uuid-time-low); }
-.uuid-part-time_mid { color: var(--uuid-time-mid); }
-.uuid-part-time_hi_and_version { color: var(--uuid-time-hi-version); }
-.uuid-part-time_hi { color: var(--uuid-time-hi); }
-.uuid-part-clock_seq { color: var(--uuid-clock-seq); }
-.uuid-part-node { color: var(--uuid-node); }
-.uuid-part-random_a { color: var(--uuid-random-a); }
-.uuid-part-random_b { color: var(--uuid-random-b); }
-.uuid-part-random_c { color: var(--uuid-random-c); }
-.uuid-part-random_d { color: var(--uuid-random-d); }
-.uuid-part-version { color: var(--uuid-version); }
-.uuid-part-variant { color: var(--uuid-variant); }
-.uuid-part-unix_ts_ms { color: var(--uuid-unix-ts); }
-.uuid-part-rand_a { color: var(--uuid-rand-a); }
-.uuid-part-rand_b { color: var(--uuid-rand-b); }
-.uuid-part-data { color: var(--text-muted); }
-.uuid-part-hash_a { color: var(--uuid-hash-a); }
-.uuid-part-hash_b { color: var(--uuid-hash-b); }
-.uuid-part-hash_c { color: var(--uuid-hash-c); }
-.uuid-part-hash_d { color: var(--uuid-hash-d); }
+.uuid-part-time_low {
+  color: var(--uuid-time-low);
+}
+.uuid-part-time_mid {
+  color: var(--uuid-time-mid);
+}
+.uuid-part-time_hi_and_version {
+  color: var(--uuid-time-hi-version);
+}
+.uuid-part-time_hi {
+  color: var(--uuid-time-hi);
+}
+.uuid-part-clock_seq {
+  color: var(--uuid-clock-seq);
+}
+.uuid-part-node {
+  color: var(--uuid-node);
+}
+.uuid-part-random_a {
+  color: var(--uuid-random-a);
+}
+.uuid-part-random_b {
+  color: var(--uuid-random-b);
+}
+.uuid-part-random_c {
+  color: var(--uuid-random-c);
+}
+.uuid-part-random_d {
+  color: var(--uuid-random-d);
+}
+.uuid-part-version {
+  color: var(--uuid-version);
+}
+.uuid-part-variant {
+  color: var(--uuid-variant);
+}
+.uuid-part-unix_ts_ms {
+  color: var(--uuid-unix-ts);
+}
+.uuid-part-rand_a {
+  color: var(--uuid-rand-a);
+}
+.uuid-part-rand_b {
+  color: var(--uuid-rand-b);
+}
+.uuid-part-data {
+  color: var(--text-muted);
+}
+.uuid-part-hash_a {
+  color: var(--uuid-hash-a);
+}
+.uuid-part-hash_b {
+  color: var(--uuid-hash-b);
+}
+.uuid-part-hash_c {
+  color: var(--uuid-hash-c);
+}
+.uuid-part-hash_d {
+  color: var(--uuid-hash-d);
+}
 
 /* UUID Summary Grid */
 .uuid-summary-grid {
@@ -194,26 +234,66 @@
   margin-right: 0.5rem;
 }
 
-.uuid-part-time_low-bg { background-color: var(--uuid-time-low); }
-.uuid-part-time_mid-bg { background-color: var(--uuid-time-mid); }
-.uuid-part-time_hi_and_version-bg { background-color: var(--uuid-time-hi-version); }
-.uuid-part-time_hi-bg { background-color: var(--uuid-time-hi); }
-.uuid-part-clock_seq-bg { background-color: var(--uuid-clock-seq); }
-.uuid-part-node-bg { background-color: var(--uuid-node); }
-.uuid-part-random_a-bg { background-color: var(--uuid-random-a); }
-.uuid-part-random_b-bg { background-color: var(--uuid-random-b); }
-.uuid-part-random_c-bg { background-color: var(--uuid-random-c); }
-.uuid-part-random_d-bg { background-color: var(--uuid-random-d); }
-.uuid-part-version-bg { background-color: var(--uuid-version); }
-.uuid-part-variant-bg { background-color: var(--uuid-variant); }
-.uuid-part-unix_ts_ms-bg { background-color: var(--uuid-unix-ts); }
-.uuid-part-rand_a-bg { background-color: var(--uuid-rand-a); }
-.uuid-part-rand_b-bg { background-color: var(--uuid-rand-b); }
-.uuid-part-data-bg { background-color: var(--text-muted); }
-.uuid-part-hash_a-bg { background-color: var(--uuid-hash-a); }
-.uuid-part-hash_b-bg { background-color: var(--uuid-hash-b); }
-.uuid-part-hash_c-bg { background-color: var(--uuid-hash-c); }
-.uuid-part-hash_d-bg { background-color: var(--uuid-hash-d); }
+.uuid-part-time_low-bg {
+  background-color: var(--uuid-time-low);
+}
+.uuid-part-time_mid-bg {
+  background-color: var(--uuid-time-mid);
+}
+.uuid-part-time_hi_and_version-bg {
+  background-color: var(--uuid-time-hi-version);
+}
+.uuid-part-time_hi-bg {
+  background-color: var(--uuid-time-hi);
+}
+.uuid-part-clock_seq-bg {
+  background-color: var(--uuid-clock-seq);
+}
+.uuid-part-node-bg {
+  background-color: var(--uuid-node);
+}
+.uuid-part-random_a-bg {
+  background-color: var(--uuid-random-a);
+}
+.uuid-part-random_b-bg {
+  background-color: var(--uuid-random-b);
+}
+.uuid-part-random_c-bg {
+  background-color: var(--uuid-random-c);
+}
+.uuid-part-random_d-bg {
+  background-color: var(--uuid-random-d);
+}
+.uuid-part-version-bg {
+  background-color: var(--uuid-version);
+}
+.uuid-part-variant-bg {
+  background-color: var(--uuid-variant);
+}
+.uuid-part-unix_ts_ms-bg {
+  background-color: var(--uuid-unix-ts);
+}
+.uuid-part-rand_a-bg {
+  background-color: var(--uuid-rand-a);
+}
+.uuid-part-rand_b-bg {
+  background-color: var(--uuid-rand-b);
+}
+.uuid-part-data-bg {
+  background-color: var(--text-muted);
+}
+.uuid-part-hash_a-bg {
+  background-color: var(--uuid-hash-a);
+}
+.uuid-part-hash_b-bg {
+  background-color: var(--uuid-hash-b);
+}
+.uuid-part-hash_c-bg {
+  background-color: var(--uuid-hash-c);
+}
+.uuid-part-hash_d-bg {
+  background-color: var(--uuid-hash-d);
+}
 
 /* UUID Legend */
 .uuid-legend {
