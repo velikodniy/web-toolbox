@@ -13,6 +13,8 @@ import {
   generatePassphrase,
   type PassphraseOptions,
 } from './lib/passphrase.ts';
+import { PasswordOptionsPanel } from './components/PasswordOptionsPanel.tsx';
+import { PassphraseOptionsPanel } from './components/PassphraseOptionsPanel.tsx';
 
 type Mode = 'password' | 'passphrase';
 
@@ -141,164 +143,16 @@ const PasswordGenerator = () => {
         <div className='pwd-options'>
           {mode === 'password'
             ? (
-              <>
-                <div className='pwd-row'>
-                  <label htmlFor='password-length' className='pwd-label'>
-                    Length
-                  </label>
-                  <input
-                    id='password-length'
-                    type='number'
-                    min={4}
-                    max={128}
-                    className='pwd-input-number'
-                    value={passwordOptions.length}
-                    onChange={(event) =>
-                      setPasswordOptions({
-                        ...passwordOptions,
-                        length: Number(event.target.value),
-                      })}
-                  />
-                  <label className='pwd-checkbox'>
-                    <input
-                      type='checkbox'
-                      checked={passwordOptions.includeLowercase}
-                      onChange={(event) =>
-                        setPasswordOptions({
-                          ...passwordOptions,
-                          includeLowercase: event.target.checked,
-                        })}
-                    />
-                    <span>a-z</span>
-                  </label>
-                  <label className='pwd-checkbox'>
-                    <input
-                      type='checkbox'
-                      checked={passwordOptions.includeUppercase}
-                      onChange={(event) =>
-                        setPasswordOptions({
-                          ...passwordOptions,
-                          includeUppercase: event.target.checked,
-                        })}
-                    />
-                    <span>A-Z</span>
-                  </label>
-                  <label className='pwd-checkbox'>
-                    <input
-                      type='checkbox'
-                      checked={passwordOptions.includeNumbers}
-                      onChange={(event) =>
-                        setPasswordOptions({
-                          ...passwordOptions,
-                          includeNumbers: event.target.checked,
-                        })}
-                    />
-                    <span>0-9</span>
-                  </label>
-                  <label className='pwd-checkbox'>
-                    <input
-                      type='checkbox'
-                      checked={passwordOptions.includeSymbols}
-                      onChange={(event) =>
-                        setPasswordOptions({
-                          ...passwordOptions,
-                          includeSymbols: event.target.checked,
-                        })}
-                    />
-                    <span>!@#$</span>
-                  </label>
-                </div>
-
-                <label className='pwd-checkbox pwd-checkbox-standalone'>
-                  <input
-                    type='checkbox'
-                    checked={passwordOptions.excludeAmbiguous}
-                    onChange={(event) =>
-                      setPasswordOptions({
-                        ...passwordOptions,
-                        excludeAmbiguous: event.target.checked,
-                      })}
-                  />
-                  <span>Exclude ambiguous (0/O, 1/l)</span>
-                </label>
-              </>
+              <PasswordOptionsPanel
+                options={passwordOptions}
+                onChange={setPasswordOptions}
+              />
             )
             : (
-              <>
-                <div className='pwd-row'>
-                  <label htmlFor='word-count' className='pwd-label'>
-                    Words
-                  </label>
-                  <input
-                    id='word-count'
-                    type='number'
-                    min={2}
-                    max={12}
-                    className='pwd-input-number'
-                    value={passphraseOptions.wordCount}
-                    onChange={(event) =>
-                      setPassphraseOptions({
-                        ...passphraseOptions,
-                        wordCount: Number(event.target.value),
-                      })}
-                  />
-
-                  <label htmlFor='separator' className='pwd-label'>
-                    Separator
-                  </label>
-                  <input
-                    id='separator'
-                    type='text'
-                    className='pwd-input-separator'
-                    value={passphraseOptions.separator}
-                    onChange={(event) =>
-                      setPassphraseOptions({
-                        ...passphraseOptions,
-                        separator: event.target.value,
-                      })}
-                    maxLength={4}
-                  />
-                </div>
-
-                <div className='pwd-checkboxes'>
-                  <label className='pwd-checkbox'>
-                    <input
-                      type='checkbox'
-                      checked={passphraseOptions.capitalize}
-                      onChange={(event) =>
-                        setPassphraseOptions({
-                          ...passphraseOptions,
-                          capitalize: event.target.checked,
-                        })}
-                    />
-                    <span>Capitalize</span>
-                  </label>
-                  <label className='pwd-checkbox'>
-                    <input
-                      type='checkbox'
-                      checked={passphraseOptions.includeNumber}
-                      onChange={(event) =>
-                        setPassphraseOptions({
-                          ...passphraseOptions,
-                          includeNumber: event.target.checked,
-                        })}
-                    />
-                    <span>Add number</span>
-                  </label>
-                  <label className='pwd-checkbox'>
-                    <input
-                      type='checkbox'
-                      checked={passphraseOptions.includeSymbol}
-                      onChange={(event) =>
-                        setPassphraseOptions({
-                          ...passphraseOptions,
-                          includeSymbol: event.target.checked,
-                        })}
-                    />
-                    <span>Add symbol</span>
-                  </label>
-                </div>
-              </>
+              <PassphraseOptionsPanel
+                options={passphraseOptions}
+                onChange={setPassphraseOptions}
+              />
             )}
         </div>
       </div>
