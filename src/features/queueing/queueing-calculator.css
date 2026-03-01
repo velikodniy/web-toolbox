@@ -1,0 +1,164 @@
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.metric-card {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.metric-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+.metric-label sub {
+  font-size: 0.7em;
+  vertical-align: baseline;
+  position: relative;
+  bottom: -0.2em;
+}
+
+.metric-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--brand-primary);
+  margin-bottom: 0.5rem;
+}
+
+.metric-description {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.model-diagram {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  margin: 1.5rem auto;
+  display: block;
+  color: var(--text-main);
+}
+
+.utilization-bar {
+  height: 6px;
+  background: var(--border-color);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.utilization-fill {
+  height: 100%;
+  background: var(--brand-primary);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.percentile-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+.percentile-table th,
+.percentile-table td {
+  padding: 0.75rem 1rem;
+  text-align: center;
+  border: 1px solid var(--border-color);
+}
+
+.percentile-table th {
+  background: var(--bg-subtle);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.percentile-table td {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+}
+
+.badge-approximate {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.15em 0.5em;
+  margin-left: 0.5rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  vertical-align: middle;
+  color: var(--text-muted);
+}
+
+.sla-target {
+  margin-top: 1rem;
+}
+
+.sla-target-input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sla-target-input .form-input {
+  max-width: 150px;
+}
+
+.input-unit {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.sla-result {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.sla-result .metric-value {
+  font-size: 1.25rem;
+  margin-bottom: 0;
+}
+
+.detailed-metrics {
+  margin-top: 1.5rem;
+}
+
+.detailed-metrics summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0.75rem 0;
+  color: var(--text-muted);
+  user-select: none;
+}
+
+.detailed-metrics summary:hover {
+  color: var(--text-main);
+}
+
+.detailed-metrics[open] summary {
+  margin-bottom: 1rem;
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
