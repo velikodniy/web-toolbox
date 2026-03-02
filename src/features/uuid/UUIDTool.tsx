@@ -13,11 +13,25 @@ import {
   type UuidVersion,
 } from './lib/uuid-domain.ts';
 import { UUIDAnalyzer } from './components/UUIDAnalyzer.tsx';
-import {
-  NAMESPACE_OPTIONS,
-  type NamespaceOption,
-  VERSION_OPTIONS,
-} from './uuid-constants.ts';
+
+type NamespaceOption = 'DNS' | 'URL' | 'OID' | 'X500' | 'custom';
+
+const VERSION_OPTIONS: { value: UuidVersion; label: string }[] = [
+  { value: 'v1', label: 'v1 (Timestamp + MAC)' },
+  { value: 'v3', label: 'v3 (MD5 hash)' },
+  { value: 'v4', label: 'v4 (Random)' },
+  { value: 'v5', label: 'v5 (SHA-1 hash)' },
+  { value: 'v6', label: 'v6 (Timestamp, reordered)' },
+  { value: 'v7', label: 'v7 (Unix timestamp)' },
+];
+
+const NAMESPACE_OPTIONS: { value: NamespaceOption; label: string }[] = [
+  { value: 'DNS', label: 'DNS' },
+  { value: 'URL', label: 'URL' },
+  { value: 'OID', label: 'OID' },
+  { value: 'X500', label: 'X.500' },
+  { value: 'custom', label: 'Custom' },
+];
 
 const requiresNamespaceAndName = (version: UuidVersion): boolean => {
   return version === 'v3' || version === 'v5';

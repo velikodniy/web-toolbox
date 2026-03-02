@@ -6,7 +6,27 @@ import {
   type UuidAnalysis,
   type UuidPart,
 } from '../lib/uuid-analyzer.ts';
-import { PART_LEGEND } from '../uuid-constants.ts';
+
+const PART_LEGEND: { name: string; label: string }[] = [
+  { name: 'time_low', label: 'Time Low' },
+  { name: 'time_mid', label: 'Time Mid' },
+  { name: 'time_hi', label: 'Time High' },
+  { name: 'clock_seq', label: 'Clock Seq' },
+  { name: 'node', label: 'Node' },
+  { name: 'unix_ts_ms', label: 'Timestamp' },
+  { name: 'rand_a', label: 'Random A' },
+  { name: 'rand_b', label: 'Random B' },
+  { name: 'random_a', label: 'Random A' },
+  { name: 'random_b', label: 'Random B' },
+  { name: 'random_c', label: 'Random C' },
+  { name: 'random_d', label: 'Random D' },
+  { name: 'hash_a', label: 'Hash A' },
+  { name: 'hash_b', label: 'Hash B' },
+  { name: 'hash_c', label: 'Hash C' },
+  { name: 'hash_d', label: 'Hash D' },
+  { name: 'version', label: 'Version' },
+  { name: 'variant', label: 'Variant' },
+];
 
 type UUIDAnalyzerProps = {
   initialInput?: string;
