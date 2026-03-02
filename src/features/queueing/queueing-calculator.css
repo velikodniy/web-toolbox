@@ -161,4 +161,11 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1rem;
+  align-items: start;
+}
+
+.input-grid .form-group {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  margin-bottom: 0;
 }
